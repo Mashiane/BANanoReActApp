@@ -23,9 +23,10 @@ Module5=pgIndex
 Module6=BANanoHTML
 Module7=pgLesson02
 Module8=pgLesson04
+Module9=pgLesson05
 NumberOfFiles=5
 NumberOfLibraries=4
-NumberOfModules=8
+NumberOfModules=9
 Version=7.51
 @EndOfDesignText@
 #Region Project Attributes 
@@ -92,5 +93,6 @@ Sub BANano_Ready
 	'pgLesson01.Show
 	'pgLesson02.Show
 	'pgLesson03.show
-	pgLesson04.show
+	'pgLesson04.show
+	pgLesson05.show
 End Sub

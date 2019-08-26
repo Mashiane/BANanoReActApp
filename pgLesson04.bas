@@ -75,31 +75,32 @@ Sub Show
 	BR.Initialize
 	'
 	'create an ol
-	Dim ol As ReactElement = BR.ol
-	ol.SetClassName("rectangle")
+	Dim ol As ReactElement = BR.ol("").AddClass("rectangle").SetKey("myol")
 	
+	Dim e As BANanoEvent
+	Dim cb As BANanoObject = BANano.CallBack(Me, "ItemClick", Array(e))
 	'create a list item
-	Dim li1 As ReactElement = BR.li
-	li1.AddReactElement(BR.CreateReactElement("a", CreateMap("href":"#"),"Item 1"))
+	Dim li1 As ReactElement = BR.li("").SetKey("li1")
+	li1.AddReactElement(BR.CreateReactElement("a", CreateMap("href":"#", "onClick": cb, "key": "item1"),"Item 1"))
 	'
-	Dim li2 As ReactElement = BR.li
-	li2.AddReactElement(BR.CreateReactElement("a", CreateMap("href":"#"),"Item 2"))
+	Dim li2 As ReactElement = BR.li("").SetKey("li2")
+	li2.AddReactElement(BR.CreateReactElement("a", CreateMap("href":"#", "onClick": cb, "key": "item2"),"Item 2"))
 	'
-	Dim li3 As ReactElement = BR.li
-	li3.AddReactElement(BR.CreateReactElement("a", CreateMap("href":"#"),"Item 3"))
+	Dim li3 As ReactElement = BR.li("").SetKey("li3")
+	li3.AddReactElement(BR.CreateReactElement("a", CreateMap("href":"#", "onClick": cb, "key": "item3"),"Item 3"))
 	'
-	Dim li4 As ReactElement = BR.li
-	li4.AddReactElement(BR.CreateReactElement("a", CreateMap("href":"#"),"Item 4"))
+	Dim li4 As ReactElement = BR.li("").SetKey("li4")
+	li4.AddReactElement(BR.CreateReactElement("a", CreateMap("href":"#", "onClick": cb, "key": "item4"),"Item 4"))
 	'
-	Dim li5 As ReactElement = BR.li
-	li5.AddReactElement(BR.CreateReactElement("a", CreateMap("href":"#"),"Item 5"))
+	Dim li5 As ReactElement = BR.li("").SetKey("li5")
+	li5.AddReactElement(BR.CreateReactElement("a", CreateMap("href":"#", "onClick": cb, "key": "item5"),"Item 5"))
 	'
-	ol.AddReactElement(li1)
-	ol.AddReactElement(li2)
-	ol.AddReactElement(li3)
-	ol.AddReactElement(li4)
-	ol.AddReactElement(li5)
+	ol.AddReactElements(Array(li1,li2,li3,li4,li5))
 	'
 	BR.Render(ol, rr)
 	
+End Sub
+
+Sub ItemClick(e As BANanoEvent)
+	Log(e)
 End Sub

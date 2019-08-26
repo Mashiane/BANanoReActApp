@@ -43,22 +43,29 @@ Sub Render(child As ReactElement, parent As BANanoObject)
 End Sub
 
 'create a div
-Sub div As ReactElement
+Sub div(z As String) As ReactElement
 	Dim d As ReactElement
 	d.Initialize(Me, "div") 
 	Return d
 End Sub
 
 'create a label item
-Sub label As ReactElement
+Sub label(z As String) As ReactElement
 	Dim d As ReactElement
 	d.Initialize(Me, "label")
 	Return d
 End Sub
 
 
+'create a button item
+Sub button(z As String) As ReactElement
+	Dim d As ReactElement
+	d.Initialize(Me, "button")
+	Return d
+End Sub
+
 'create an input item
-Sub input As ReactElement
+Sub input(z As String) As ReactElement
 	Dim d As ReactElement
 	d.Initialize(Me, "input")
 	Return d
@@ -66,92 +73,100 @@ End Sub
 
 
 'create a header item
-Sub header As ReactElement
+Sub header(z As String) As ReactElement
 	Dim d As ReactElement
 	d.Initialize(Me, "header")
 	Return d
 End Sub
 
 'create a footer item
-Sub footer As ReactElement
+Sub footer(z As String) As ReactElement
 	Dim d As ReactElement
 	d.Initialize(Me, "footer")
 	Return d
 End Sub
 
 'create a list item
-Sub li As ReactElement
+Sub li(z As String) As ReactElement
 	Dim d As ReactElement
 	d.Initialize(Me, "li")
 	Return d
 End Sub
 
 'create an unordered list
-Sub ul As ReactElement
+Sub ul(z As String) As ReactElement
 	Dim d As ReactElement
 	d.Initialize(Me, "ul")
 	Return d
 End Sub
 
 'create an anchor
-Sub a As ReactElement
+Sub a(z As String) As ReactElement
 	Dim d As ReactElement
 	d.Initialize(Me, "a")
 	Return d
 End Sub
 
 'create a paragraph
-Sub p As ReactElement
+Sub p(z As String) As ReactElement
 	Dim d As ReactElement
 	d.Initialize(Me, "p")
 	Return d
 End Sub
 
 'create a h1
-Sub h1 As ReactElement
+Sub h1(z As String) As ReactElement
 	Dim d As ReactElement
 	d.Initialize(Me, "h1")
 	Return d
 End Sub
 
 'create a h2
-Sub h2 As ReactElement
+Sub h2(z As String) As ReactElement
 	Dim d As ReactElement
 	d.Initialize(Me, "h2")
 	Return d
 End Sub
 
 'create a h3
-Sub h3 As ReactElement
+Sub h3(z As String) As ReactElement
 	Dim d As ReactElement
 	d.Initialize(Me, "h3")
 	Return d
 End Sub
 
 'create a h4
-Sub h4 As ReactElement
+Sub h4(z As String) As ReactElement
 	Dim d As ReactElement
 	d.Initialize(Me, "h4")
 	Return d
 End Sub
 
 'create a h5
-Sub h5 As ReactElement
+Sub h5(z As String) As ReactElement
 	Dim d As ReactElement
 	d.Initialize(Me, "h5")
 	Return d
 End Sub
 
 'create a h6
-Sub h6 As ReactElement
+Sub h6(z As String) As ReactElement
 	Dim d As ReactElement
 	d.Initialize(Me, "h6")
 	Return d
 End Sub
 
 'create an ol
-Sub ol As ReactElement
+Sub ol(z As String) As ReactElement
 	Dim d As ReactElement
 	d.Initialize(Me, "ol")
+	Return d
+End Sub
+
+
+'create a form
+Sub form(z As String) As ReactElement
+	Dim d As ReactElement
+	d.Initialize(Me, "form")
 	Return d
 End Sub

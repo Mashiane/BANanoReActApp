@@ -28,19 +28,18 @@ Sub Show
 	'
 	
 	'create a div
-	Dim div As ReactElement = BR.div
+	Dim div As ReactElement = BR.div("")
 	'create a h1 with text contacts
-	Dim h1 As ReactElement = BR.h1
-	h1.AddChild("Contacts")
+	Dim h1 As ReactElement = BR.h1("").AddChild("Contacts")
 	'create a ul
-	Dim ul As ReactElement = BR.ul
+	Dim ul As ReactElement = BR.ul("")
 	'create a list item
-	Dim li1 As ReactElement = BR.li
+	Dim li1 As ReactElement = BR.li("")
 	li1.AddChild(BR.CreateElement("a", CreateMap("href":"mailto:james@frontarm.com"),"James Nelson"))
 	'
-	Dim li2 As ReactElement = BR.li
-	Dim a2 As ReactElement = BR.a
-	a2.AddChild("Mashy").SetHREF("mailto:mbangaa@gmail.com").AddToParent(li2)
+	Dim li2 As ReactElement = BR.li("")
+	Dim a2 As ReactElement = BR.a("").AddChild("Mashy").SetHREF("mailto:mbangaa@gmail.com")
+	a2.AddToParent(li2)
 	'
 	ul.AddReactElement(li1)
 	ul.AddReactElement(li2)

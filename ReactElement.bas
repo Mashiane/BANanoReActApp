@@ -15,6 +15,7 @@ Sub Class_Globals
 	Private style As Map
 	Private classList As Map
 	Private className As String
+	Private state As Map
 End Sub
 
 'initialize the react element
@@ -26,6 +27,7 @@ Public Sub Initialize(BR As BANanoReact, sTag As String) As ReactElement
 	style.Initialize 
 	classList.Initialize 
 	className = ""
+	state.Initialize 
 	Return Me
 End Sub
 
@@ -54,15 +56,66 @@ Sub SetProp(k As String, v As Object) As ReactElement
 	Return Me	
 End Sub
 
+'set the state
+Sub SetState(k As String, v As Object) As ReactElement
+	state.Put(k, v)
+	Return Me	
+End Sub
+
 'set for / set htmlfor
 Sub SetFor(k As String) As ReactElement
 	SetProp("htmlFor",k)
 	Return Me
 End Sub
 
+'set placeholder
+Sub SetPlaceholder(k As String) As ReactElement
+	SetProp("placeholder",k)
+	Return Me
+End Sub
+
+
+'set the name
+Sub SetName(k As String) As ReactElement
+	SetProp("name", k)
+	Return Me
+End Sub
+
+
+'set the action
+Sub SetAction(k As String) As ReactElement
+	SetProp("action", k)
+	Return Me
+End Sub
+
+
+'set the target
+Sub SetTarget(k As String) As ReactElement
+	SetProp("target", k)
+	Return Me
+End Sub
+
+'set the label
+Sub SetLabel(k As String) As ReactElement
+	SetProp("label", k)
+	Return Me
+End Sub
+
 'set the key
 Sub SetKey(k As String) As ReactElement
 	SetProp("key", k)
+	Return Me
+End Sub
+
+'set the type
+Sub SetType(k As String) As ReactElement
+	SetProp("type", k)
+	Return Me
+End Sub
+
+'set the data
+Sub SetData(k As Object) As ReactElement
+	SetProp("data", k)
 	Return Me
 End Sub
 
@@ -81,6 +134,15 @@ Sub SetStyle(k As String, v As String) As ReactElement
 	Return Me	
 End Sub
 
+'set multiple styles
+Sub SetStyles(m As Map) As ReactElement
+	For Each k As String In m.Keys
+		Dim v As String = m.Get(k)
+		SetStyle(k,v)
+	Next
+	Return Me
+End Sub
+
 'set the value
 Sub SetValue(h As String) As ReactElement
 	SetProp("value", h)
@@ -90,12 +152,6 @@ End Sub
 'set the href
 Sub SetHREF(h As String) As ReactElement
 	SetProp("href", h)
-	Return Me
-End Sub
-
-'set the type to text
-Sub SetType(h As String) As ReactElement
-	SetProp("type", h)
 	Return Me
 End Sub
 
@@ -112,6 +168,15 @@ Sub AddReactElement(child As ReactElement) As ReactElement
 	Return Me
 End Sub
 
+'add a react element child
+Sub AddReactElements(childrenList As List) As ReactElement
+	For Each re As ReactElement In childrenList
+		AddReactElement(re)
+	Next
+	Return Me
+End Sub
+
+
 'add to parent
 Sub AddToParent(parent As ReactElement)
 	CreateElement
@@ -120,10 +185,9 @@ End Sub
 
 'create the element
 Sub CreateElement
-	Log(classList.Size)
-	
 	If classList.Size > 0 Then
-		className = Join(" ", classList)
+		Dim mk As List = MapKeys2List(classList)
+		className = Join(" ", mk)
 		className = className.trim
 	End If
 	If className <> "" Then
@@ -141,6 +205,28 @@ Sub CreateElement
 	End Select
 End Sub
 
+'convert map keys to a list
+private Sub MapKeys2List(m As Map) As List
+	Dim lst As List
+	lst.Initialize 
+	For Each k As String In m.Keys
+		lst.Add(k)
+	Next
+	Return lst
+End Sub
+
+
+'convert map values to a list
+private Sub MapValues2List(m As Map) As List
+	Dim lst As List
+	lst.Initialize
+	For Each k As String In m.values
+		lst.Add(k)
+	Next
+	Return lst
+End Sub
+
+'join a list
 private Sub Join(delimiter As String, lst As List) As String
 	Dim i As Int
 	Dim sb As StringBuilder
@@ -153,7 +239,8 @@ private Sub Join(delimiter As String, lst As List) As String
 End Sub
 
 'on click event
-Sub OnClick(cb As BANanoObject) As ReactElement
+Sub SetOnClick(cb As BANanoObject) As ReactElement
 	SetProp("onClick", cb)
 	Return Me
 End Sub
+
