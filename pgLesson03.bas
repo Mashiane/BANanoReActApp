@@ -36,11 +36,11 @@ Sub Show
 	Dim ul As ReactElement = BR.ul
 	'create a list item
 	Dim li1 As ReactElement = BR.li
-	li1.AddChild(BR.CreateElement("a", CreateMap("href":"mailto:james@frontarm.com"),"James Nelson"))
+	li1.AddReactElement(BR.CreateReactElement("a", CreateMap("href":"mailto:james@frontarm.com"),"James Nelson"))
 	'
 	Dim li2 As ReactElement = BR.li
-	Dim a2 As ReactElement = BR.a
-	a2.AddChild("Mashy").SetHREF("mailto:mbangaa@gmail.com").AddToParent(li2)
+	li2.AddReactElement(BR.CreateReactElement("a", CreateMap("href":"mailto:mashy@mbangas.com"),"Mashy"))
+	
 	'
 	ul.AddReactElement(li1)
 	ul.AddReactElement(li2)
