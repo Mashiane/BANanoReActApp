@@ -1,0 +1,42 @@
+﻿AppType=JavaFX
+Build1=Default,b4j.example
+File1=react.production.min.js
+File2=react-dom.production.min.js
+FileGroup1=Default Group
+FileGroup2=Default Group
+Group=Default Group
+Library1=jcore
+Library2=jfx
+Library3=banano
+Module1=BANanoReact
+Module2=ReactElement
+Module3=BANanoHTML
+NumberOfFiles=2
+NumberOfLibraries=3
+NumberOfModules=3
+Version=7.51
+@EndOfDesignText@
+ #Region Project Attributes 
+ 	#MergeLibraries: True
+	#LibraryAuthor: Anele Mashy Mbanga
+	#LibraryVersion: 1.00
+	#LibraryName: BANanoReact
+#End Region
+
+#IgnoreWarnings:15
+Sub Process_Globals
+	Public BANano As BANano 'ignore
+End Sub
+
+Sub AppStart (Form1 As Form, Args() As String)
+	'initialize banano for first use
+	BANano.Initialize("BANano", "BANanoReact",DateTime.Now)
+	BANano.TranspilerOptions.UseServiceWorker = False
+	BANano.BuildAsB4XLib("1.00")
+	ExitApplication
+End Sub
+
+'Return true to allow the default exceptions handler to handle the uncaught exception.
+Sub Application_Error (Error As Exception, StackTrace As String) As Boolean
+	Return True
+End Sub

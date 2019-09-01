@@ -1,0 +1,94 @@
+﻿AppType=JavaFX
+Build1=Default,b4j.example
+File1=components.css
+File2=dialog-polyfill.css
+File3=dialog-polyfill.js
+File4=material.min.css
+File5=material.min.js
+File6=react.production.min.js
+File7=react-dom.production.min.js
+FileGroup1=Default Group
+FileGroup2=Default Group
+FileGroup3=Default Group
+FileGroup4=Default Group
+FileGroup5=Default Group
+FileGroup6=Default Group
+FileGroup7=Default Group
+Group=Default Group
+Library1=jcore
+Library2=jfx
+Library3=banano
+Library4=bananopostprocessor
+Library5=bananoreactlib
+Module1=MDLProgress
+Module10=MDLSlider
+Module11=MDLCard
+Module12=MDLImage
+Module13=MDLAnchor
+Module14=MDLChip
+Module15=MDLLayout
+Module16=MDLNav
+Module17=MDLDrawer
+Module18=MDLHeader
+Module19=MDLText
+Module2=MDLSpinner
+Module20=MDLTabBar
+Module21=MDLTabs
+Module22=MDLSearch
+Module23=MDLSnackBar
+Module24=MDLMenu
+Module25=MDL
+Module26=MDLFooter
+Module27=MDLMegaFooterDDS
+Module28=MDLMegaFooterSection
+Module29=MDLMiniFooterSection
+Module3=MDLButton
+Module30=MDLList
+Module31=MDLListItemPrimaryContent
+Module32=MDLListItem
+Module33=MDLListItemSecondaryContent
+Module34=MDLIcon
+Module35=MDLColumn
+Module36=MDLGrid
+Module37=MDLTable
+Module38=MDLHeaderRow
+Module4=MDLItem
+Module5=MDLTooltip
+Module6=MDLCheckBox
+Module7=MDLRadio
+Module8=MDLIconToggle
+Module9=MDLSwitch
+NumberOfFiles=7
+NumberOfLibraries=5
+NumberOfModules=38
+Version=7.51
+@EndOfDesignText@
+ #Region Project Attributes 
+ 	#MergeLibraries: True
+	#LibraryAuthor: Anele Mashy Mbanga
+	#LibraryVersion: 0.01
+	#LibraryName: BANanoReactMDL
+#End Region
+
+#IgnoreWarnings:15
+Sub Process_Globals
+	Public BANano As BANano 'ignore
+End Sub
+
+Sub AppStart (Form1 As Form, Args() As String)
+	'initialize banano for first use
+	BANano.Initialize("BANano", "BANanoReactMDL",DateTime.Now)
+	BANano.TranspilerOptions.UseServiceWorker = False
+	'add development react, replace these for production on app publish
+	BANano.Header.AddJavascriptFile("react.production.min.js")
+	BANano.Header.AddJavascriptFile("react-dom.production.min.js")
+	BANano.Header.AddCSSFile("material.min.css")
+	BANano.Header.AddJavascriptFile("material.min.js")	'
+	BANano.BuildAsB4XLib("0.01")
+	ExitApplication
+End Sub
+
+'Return true to allow the default exceptions handler to handle the uncaught exception.
+Sub Application_Error (Error As Exception, StackTrace As String) As Boolean
+	Return True
+End Sub

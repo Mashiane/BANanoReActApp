@@ -1,0 +1,98 @@
+﻿AppType=JavaFX
+Build1=Default,b4j.example
+File1=bootstrap.min.css
+File2=bootstrap.min.js
+File3=image005.JPG
+File4=jquery-3.3.1.slim.min.js
+File5=popper.min.js
+FileGroup1=Default Group
+FileGroup2=Default Group
+FileGroup3=Default Group
+FileGroup4=Default Group
+FileGroup5=Default Group
+Group=Default Group
+Library1=jcore
+Library2=jfx
+Library3=banano
+Library4=bananopostprocessor
+Library5=bananoreactlib
+Module1=pgIndex
+Module2=modReact
+Module3=pgLesson01
+Module4=pgLesson02
+Module5=pgLesson03
+Module6=pgLesson04
+NumberOfFiles=5
+NumberOfLibraries=5
+NumberOfModules=6
+Version=7.51
+@EndOfDesignText@
+#Region Project Attributes 
+#End Region
+#IgnoreWarnings:15
+Sub Process_Globals
+	Public BANano As BANano 'ignore
+	Public AppName As String = "BANanoReActDemo"
+	Private Publish As String
+	Private BP As BANanoPostProcessor
+End Sub
+
+Sub AppStart (Form1 As Form, Args() As String)
+	Publish = "C:\laragon\www"
+	Dim Version As String = DateTime.now
+	Dim appFile As String = $"app${Version}.js"$
+	BANano.Initialize("BANano", AppName,1)
+	BANano.HTML_NAME = "index.html"
+	BANano.Header.Title = AppName
+	BANano.JAVASCRIPT_NAME = appFile
+	'
+	BANano.Header.Title = "BANanoReactDemo"
+	
+	'add development react, replace these for production on app publish
+	BANano.Header.AddJavascriptFile("react.production.min.js")
+	BANano.Header.AddJavascriptFile("react-dom.production.min.js")
+	'
+	'BANano.Header.AddCSSFile("bootstrap.min.css")
+	'BANano.Header.AddJavascriptFile("bootstrap.min.js")
+	'BANano.Header.AddJavascriptFile("jquery-3.3.1.slim.min.js")
+	'BANano.Header.AddJavascriptFile("popper.min.js")
+	
+	'
+	'BANano.TranspilerOptions.ShowWarningDeadCode = True
+	'BANano.TranspilerOptions.RemoveDeadCode = True
+	BANano.TranspilerOptions.UseServiceWorker = False
+	'BANano.TranspilerOptions.MergeAllCSSFiles = True
+	'BANano.TranspilerOptions.MergeAllJavascriptFiles = True
+	'php
+	'set php settings
+	'BANano.PHP_NAME = "BANanoReActApp.php"
+	'BANano.PHPHost = $"http://localhost/${AppName}/"$
+	'BANano.PHPAddHeader("Access-Control-Allow-Origin: *")
+	'
+	BANano.Build(Publish)
+	'post processor
+	BP.Initialize
+	BP.PublishPath = Publish
+	BP.ShortName = AppName
+	BP.AssetsPath = BANano.ASSETS_FOLDER
+	BP.ScriptsPath = BANano.SCRIPTS_FOLDER
+	BP.StylesPath = BANano.STYLES_FOLDER
+	BP.ScriptFile = BANano.JAVASCRIPT_NAME
+	'BP.UnzipFonts
+	'BP.UnzipFile("extras.zip")
+	BP.Open(True)
+	ExitApplication
+End Sub
+
+'Return true to allow the default exceptions handler to handle the uncaught exception.
+Sub Application_Error (Error As Exception, StackTrace As String) As Boolean
+	Return True
+End Sub
+
+Sub BANano_Ready
+	pgIndex.Show 
+	'pgLesson01.Show
+	'pgLesson02.Show
+	'pgLesson03.show
+	'pgLesson04.show
+End Sub
