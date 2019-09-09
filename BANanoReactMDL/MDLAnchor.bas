@@ -1,5 +1,5 @@
 ﻿B4J=true
-Group=Default Group\MDL
+Group=Default Group
 ModulesStructureVersion=1
 Type=Class
 Version=7.51
@@ -7,12 +7,15 @@ Version=7.51
 #IgnoreWarnings:12, 9
 Sub Class_Globals
 	Public ID As String
-	Public AnchorInt As ReactElement
+	Private AnchorInt As ReactElement
+	Private banre As BANanoReact 
 End Sub
 
 'initialize the button
 Public Sub Initialize(BR As BANanoReact, sid As String) As MDLAnchor
+	ID = sid.tolowercase
 	AnchorInt = BR.a(sid)
+	banre = BR
 	Return Me
 End Sub
 
@@ -48,6 +51,14 @@ End Sub
 'set properties
 Sub SetProps(m As Map) As MDLAnchor
 	AnchorInt.SetProps(m)
+	Return Me
+End Sub
+
+'set the icon
+Sub SetIcon(icon As String) As MDLAnchor
+	Dim icn As MDLItem
+	icn.Initialize(banre, "i").SetMaterialIcons(icon)
+	AnchorInt.AddElement(icn.Item)
 	Return Me
 End Sub
 

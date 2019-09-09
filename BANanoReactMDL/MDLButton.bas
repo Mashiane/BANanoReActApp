@@ -1,5 +1,5 @@
 ﻿B4J=true
-Group=Default Group\MDL
+Group=Default Group
 ModulesStructureVersion=1
 Type=Class
 Version=7.51
@@ -34,8 +34,8 @@ Sub SetMenu(b As Boolean) As MDLButton
 End Sub
 
 'on click event
-Sub SetOnClick(cb As BANanoObject) As MDLButton
-	ButtonInt.SetOnClick(cb)
+Sub SetOnClick(module As Object, methodName As String) As MDLButton
+	ButtonInt.SetOnClick(module, methodName)
 	Return Me
 End Sub
 

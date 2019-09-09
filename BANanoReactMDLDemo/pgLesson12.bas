@@ -25,13 +25,13 @@ Sub Show
 	'set the theme of the header
 	lay.Header.AddClass("mdl-color--grey-100 mdl-color-text--grey-600")
 	'set the header title
-	lay.Header.TopRow.SetTitle("Home")
+	lay.Header.SetTitle("Home")
 	'add a spacer so that everything is on the right
-	lay.Header.TopRow.SetSpacer(True)
+	lay.Header.SetSpacer(True)
 	'add a search input control
-	lay.Header.TopRow.SetSearch("search")
+	lay.Header.SetSearch("search")
 	'add a menu button icon
-	lay.Header.TopRow.SetButtonMenu("hdrMenu")
+	lay.Header.SetButtonMenu("hdrMenu")
 	'add menu and link it to the button icon
 	Dim hdrMenu As MDLMenu
 	hdrMenu.Initialize(BR, "hdrMenuChild")
@@ -44,7 +44,7 @@ Sub Show
 	hdrMenu.AddMenuItem("hdrContact", "Contact", False, False)
 	hdrMenu.AddMenuItem("hdrLegal", "Legal Information", False, False)
 	'add menu to the header
-	lay.Header.TopRow.SetMenu(hdrMenu)
+	lay.Header.SetMenu(hdrMenu)
 	
 	'**** DRAWER ****
 	'fixed drawer

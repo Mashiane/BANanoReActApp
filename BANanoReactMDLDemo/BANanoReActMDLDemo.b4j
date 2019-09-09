@@ -2,11 +2,12 @@
 Build1=Default,b4j.example
 File1=8.jpg
 File2=dog.png
-File3=image005.JPG
-File4=mike.jpg
-File5=transparent.jpg
-File6=typhon_pytheas.jpg
-File7=user.jpg
+File3=fonts.zip
+File4=image005.JPG
+File5=mike.jpg
+File6=transparent.jpg
+File7=typhon_pytheas.jpg
+File8=user.jpg
 FileGroup1=Default Group
 FileGroup2=Default Group
 FileGroup3=Default Group
@@ -14,6 +15,7 @@ FileGroup4=Default Group
 FileGroup5=Default Group
 FileGroup6=Default Group
 FileGroup7=Default Group
+FileGroup8=Default Group
 Group=Default Group
 Library1=jcore
 Library2=jfx
@@ -21,23 +23,28 @@ Library3=banano
 Library4=bananopostprocessor
 Library5=bananoreactmdllib
 Module1=pgLesson15
-Module2=pgLesson12
-NumberOfFiles=7
+Module2=pgExtensions
+Module3=pgLesson12
+NumberOfFiles=8
 NumberOfLibraries=5
-NumberOfModules=2
-Version=7.51
+NumberOfModules=3
+Version=7.78
 @EndOfDesignText@
 #Region Project Attributes 
 #End Region
 #IgnoreWarnings:15
 Sub Process_Globals
 	Public BANano As BANano 'ignore
-	Public AppName As String = "BANanoReActApp"
+	Public AppName As String = "BANanoReActAppDemo"
 	Private Publish As String
 	Private BP As BANanoPostProcessor
 End Sub
 
+
+
 Sub AppStart (Form1 As Form, Args() As String)
+	BP.Initialize
+	BP.RedirectOutput(File.DirApp, "logs.txt") 
 	Publish = "C:\laragon\www"
 	Dim Version As String = DateTime.now
 	Dim appFile As String = $"app${Version}.js"$
@@ -46,17 +53,46 @@ Sub AppStart (Form1 As Form, Args() As String)
 	BANano.Header.Title = AppName
 	BANano.JAVASCRIPT_NAME = appFile
 	'
-	BANano.Header.Title = "BANanoReactApp"
-	
-	'add development react, replace these for production on app publish
-	BANano.Header.AddJavascriptFile("react.production.min.js")
-	BANano.Header.AddJavascriptFile("react-dom.production.min.js")
-	'
+	BANano.Header.Title = "BANanoReactAppDemo"
 	'try library
 	BANano.Header.AddCSSFile("https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en")
+	BANano.Header.AddCSSFile("https://fonts.googleapis.com/icon?family=Material+Icons")
+	'
+	BANano.Header.AddJavascriptFile("react.production.min.js")
+	BANano.Header.AddJavascriptFile("react-dom.production.min.js")
 	BANano.Header.AddCSSFile("material.min.css")
 	BANano.Header.AddJavascriptFile("material.min.js")
-	BANano.Header.AddCSSFile("https://fonts.googleapis.com/icon?family=Material+Icons")
+	BANano.Header.AddCSSFile("mdl-speed-dial.css")
+	BANano.Header.AddJavascriptFile("jquery-3.4.1.min.js")
+	BANano.Header.addjavascriptfile("mdl-speed-dial.js")
+	BANano.Header.AddCSSFile("material.components.ext.min.css")
+	BANano.Header.AddJavascriptFile("material.components.ext.min.js")
+	'BANano.Header.AddCSSFile("getmdl-select.min.css")
+	'BANano.Header.AddJavascriptFile("getmdl-select.min.js")
+	'BANano.Header.AddJavascriptFile("jquery.touchSwipe.min.js")
+	'BANano.Header.AddJavascriptFile("mdlDrawerPull.min.js")
+	BANano.Header.AddCSSFile("mdl-selectfield.min.css")
+	BANano.Header.AddJavascriptFile("mdl-selectfield.min.js")
+	'
+	'BANano.Header.AddCSSFile("datepicker.min.css")
+	BANano.Header.AddJavascriptFile("moment.js")
+	'BANano.Header.AddJavascriptFile("material-datepicker.min.js")
+	'
+	'BANano.Header.AddJavascriptFile("mdl-datepicker.js")
+	
+	BANano.Header.AddCSSFile("gijgocore.min.css")
+	BANano.Header.AddCSSFile("gijgodatepicker.min.css")
+	BANano.Header.AddCSSFile("gijgotimepicker.min.css")
+	BANano.Header.AddCSSFile("gijgodatetimepicker.min.css")
+	BANano.Header.AddCSSFile("gijgodropdown.min.css")
+	'
+	BANano.Header.AddJavascriptFile("gijgocore.min.js")
+	BANano.Header.AddJavascriptFile("gijgodatepicker.min.js")
+	BANano.Header.AddJavascriptFile("gijgotimepicker.min.js")
+	BANano.Header.AddJavascriptFile("gijgodatetimepicker.min.js")
+	BANano.Header.AddJavascriptFile("gijgodropdown.min.js")
+		
+	
 	'BANano.Header.AddCSSFile("dialog-polyfill.css")
 	'BANano.Header.AddJavascriptFile("dialog-polyfill.js")
 	'BANano.Header.AddCSSFile("components.css")
@@ -75,16 +111,16 @@ Sub AppStart (Form1 As Form, Args() As String)
 	'
 	BANano.Build(Publish)
 	'post processor
-	BP.Initialize
 	BP.PublishPath = Publish
 	BP.ShortName = AppName
 	BP.AssetsPath = BANano.ASSETS_FOLDER
 	BP.ScriptsPath = BANano.SCRIPTS_FOLDER
 	BP.StylesPath = BANano.STYLES_FOLDER
 	BP.ScriptFile = BANano.JAVASCRIPT_NAME
-	'BP.UnzipFonts
+	BP.UnzipFonts
 	'BP.UnzipFile("extras.zip")
 	BP.Open(True)
+	BP.OpenLog(File.DirApp, "logs.txt") 
 	ExitApplication
 End Sub
 
@@ -95,4 +131,5 @@ End Sub
 
 Sub BANano_Ready
 	pgLesson15.show
+	'pgExtensions.Show
 End Sub

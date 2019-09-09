@@ -1,5 +1,5 @@
 ﻿B4J=true
-Group=Default Group\MDL
+Group=Default Group
 ModulesStructureVersion=1
 Type=Class
 Version=7.51
@@ -11,6 +11,7 @@ Sub Class_Globals
 	Private banreact As BANanoReact
 	Public IsDrawer As Boolean
 	Public HasContent As Boolean
+	Private BANano As BANano  'ignore
 End Sub
 
 #if css
@@ -29,7 +30,6 @@ End Sub
 }
 #End If
 
-
 'set hidden
 Sub SetHidden(b As Boolean) As MDLNav
 	NavInt.SetHidden(b)
@@ -41,8 +41,7 @@ End Sub
 Public Sub Initialize(BR As BANanoReact, sid As String) As MDLNav
 	ID = sid
 	banreact = BR
-	NavInt = BR.nav(sid)
-	NavInt.AddClass("mdl-navigation")
+	NavInt = BR.nav(sid).AddClass("mdl-navigation")
 	IsDrawer = False
 	HasContent = False
 	Return Me
@@ -70,7 +69,7 @@ Sub AddClass(clsList As String) As MDLNav
 End Sub
 
 'sub add a link, label visibility
-Sub AddLink1(linkID As String, linkHref As String, linkIcon As String, linkLabel As String, labelHidden As Boolean)
+Sub AddLink1(linkID As String, linkHref As String, linkIcon As String, linkLabel As String, labelHidden As Boolean) As MDLNav
 	Dim lnk As MDLAnchor
 	lnk.Initialize(banreact, linkID)
 	lnk.addclass("mdl-navigation__link")
@@ -91,11 +90,13 @@ Sub AddLink1(linkID As String, linkHref As String, linkIcon As String, linkLabel
 	lnk.AddElement(span)
 	NavInt.AddElement(lnk.Anchor)
 	HasContent = True
+	Return Me
 End Sub
 
 'sub add a link
-Sub AddLink(linkID As String, linkHref As String, linkIcon As String, linkLabel As String)
+Sub AddLink(linkID As String, linkHref As String, linkIcon As String, linkLabel As String) As MDLNav
 	AddLink1(linkID, linkHref, linkIcon, linkLabel,False)
+	Return Me
 End Sub
 	
 'add a layout spacer
@@ -104,5 +105,11 @@ Sub AddSpacer(b As Boolean) As MDLNav
 	sp.AddClass("mdl-layout-spacer")
 	NavInt.AddElement(sp)
 	HasContent = True
+	Return Me
+End Sub
+
+'set large screens only
+Sub SetLargeScreensOnly(b As Boolean) As MDLNav
+	NavInt.AddClass("mdl-layout--large-screen-only")
 	Return Me
 End Sub

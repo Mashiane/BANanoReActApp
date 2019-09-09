@@ -1,72 +1,126 @@
 ﻿AppType=JavaFX
 Build1=Default,b4j.example
 File1=components.css
+File10=gijgodatetimepicker.min.js
+File11=gijgodropdown.min.css
+File12=gijgodropdown.min.js
+File13=gijgogrid.min.css
+File14=gijgogrid.min.js
+File15=gijgotimepicker.min.css
+File16=gijgotimepicker.min.js
+File17=gijgotree.min.css
+File18=gijgotree.min.js
+File19=jquery-3.4.1.min.js
 File2=dialog-polyfill.css
+File20=material.components.ext.min.css
+File21=material.components.ext.min.js
+File22=material.min.css
+File23=material.min.js
+File24=mdl-selectfield.min.css
+File25=mdl-selectfield.min.js
+File26=mdl-speed-dial.css
+File27=mdl-speed-dial.js
+File28=moment.js
+File29=react.production.min.js
 File3=dialog-polyfill.js
-File4=material.min.css
-File5=material.min.js
-File6=react.production.min.js
-File7=react-dom.production.min.js
+File30=react-dom.production.min.js
+File4=fonts.zip
+File5=gijgocore.min.css
+File6=gijgocore.min.js
+File7=gijgodatepicker.min.css
+File8=gijgodatepicker.min.js
+File9=gijgodatetimepicker.min.css
 FileGroup1=Default Group
+FileGroup10=Default Group
+FileGroup11=Default Group
+FileGroup12=Default Group
+FileGroup13=Default Group
+FileGroup14=Default Group
+FileGroup15=Default Group
+FileGroup16=Default Group
+FileGroup17=Default Group
+FileGroup18=Default Group
+FileGroup19=Default Group
 FileGroup2=Default Group
+FileGroup20=Default Group
+FileGroup21=Default Group
+FileGroup22=Default Group
+FileGroup23=Default Group
+FileGroup24=Default Group
+FileGroup25=Default Group
+FileGroup26=Default Group
+FileGroup27=Default Group
+FileGroup28=Default Group
+FileGroup29=Default Group
 FileGroup3=Default Group
+FileGroup30=Default Group
 FileGroup4=Default Group
 FileGroup5=Default Group
 FileGroup6=Default Group
 FileGroup7=Default Group
+FileGroup8=Default Group
+FileGroup9=Default Group
 Group=Default Group
 Library1=jcore
 Library2=jfx
 Library3=banano
-Library4=bananopostprocessor
-Library5=bananoreactlib
-Module1=MDLProgress
-Module10=MDLSlider
-Module11=MDLCard
-Module12=MDLImage
-Module13=MDLAnchor
-Module14=MDLChip
-Module15=MDLLayout
-Module16=MDLNav
-Module17=MDLDrawer
-Module18=MDLHeader
-Module19=MDLText
-Module2=MDLSpinner
-Module20=MDLTabBar
-Module21=MDLTabs
-Module22=MDLSearch
-Module23=MDLSnackBar
-Module24=MDLMenu
-Module25=MDL
-Module26=MDLFooter
-Module27=MDLMegaFooterDDS
-Module28=MDLMegaFooterSection
-Module29=MDLMiniFooterSection
-Module3=MDLButton
-Module30=MDLList
-Module31=MDLListItemPrimaryContent
-Module32=MDLListItem
-Module33=MDLListItemSecondaryContent
-Module34=MDLIcon
-Module35=MDLColumn
-Module36=MDLGrid
-Module37=MDLTable
-Module38=MDLHeaderRow
-Module4=MDLItem
-Module5=MDLTooltip
-Module6=MDLCheckBox
-Module7=MDLRadio
-Module8=MDLIconToggle
-Module9=MDLSwitch
-NumberOfFiles=7
-NumberOfLibraries=5
-NumberOfModules=38
-Version=7.51
+Library4=bananoreactlib
+Module1=MDLText
+Module10=MDLSelectField
+Module11=MDLDrawer
+Module12=MDLLayout
+Module13=MDLTable
+Module14=MDLHeader
+Module15=MDLSpeedDial
+Module16=MDLButton
+Module17=MDL
+Module18=MDLHeaderRow
+Module19=MDLProgress
+Module2=MDLSearch
+Module20=MDLSpinner
+Module21=MDLItem
+Module22=MDLTooltip
+Module23=MDLCard
+Module24=MDLImage
+Module25=MDLAnchor
+Module26=MDLChip
+Module27=MDLNav
+Module28=MDLTabBar
+Module29=MDLTabs
+Module3=MDLAvatar
+Module30=MDLSnackBar
+Module31=MDLMenu
+Module32=MDLFooter
+Module33=MDLMegaFooterDDS
+Module34=MDLMegaFooterSection
+Module35=MDLMiniFooterSection
+Module36=MDLList
+Module37=MDLListItemPrimaryContent
+Module38=MDLListItem
+Module39=MDLListItemSecondaryContent
+Module4=MDLFileInput
+Module40=MDLIcon
+Module41=MDLColumn
+Module42=MDLGrid
+Module43=MDLForm
+Module44=MDLDatePicker
+Module45=MDLDateTimePicker
+Module46=MDLTimePicker
+Module47=MDLDropDown
+Module5=MDLCheckBox
+Module6=MDLRadio
+Module7=MDLIconToggle
+Module8=MDLSwitch
+Module9=MDLSlider
+NumberOfFiles=30
+NumberOfLibraries=4
+NumberOfModules=47
+Version=7.78
 @EndOfDesignText@
  #Region Project Attributes 
  	#MergeLibraries: True
 	#LibraryAuthor: Anele Mashy Mbanga
-	#LibraryVersion: 0.01
+	#LibraryVersion: 0.02
 	#LibraryName: BANanoReactMDL
 #End Region
 
@@ -74,6 +128,7 @@ Version=7.51
 Sub Process_Globals
 	Public BANano As BANano 'ignore
 End Sub
+
 
 Sub AppStart (Form1 As Form, Args() As String)
 	'initialize banano for first use
@@ -83,8 +138,33 @@ Sub AppStart (Form1 As Form, Args() As String)
 	BANano.Header.AddJavascriptFile("react.production.min.js")
 	BANano.Header.AddJavascriptFile("react-dom.production.min.js")
 	BANano.Header.AddCSSFile("material.min.css")
-	BANano.Header.AddJavascriptFile("material.min.js")	'
-	BANano.BuildAsB4XLib("0.01")
+	BANano.Header.AddJavascriptFile("material.min.js")
+	BANano.Header.AddCSSFile("mdl-speed-dial.css")
+	BANano.Header.AddJavascriptFile("jquery-3.4.1.min.js")
+	BANano.Header.addjavascriptfile("mdl-speed-dial.js")
+	BANano.Header.AddCSSFile("material.components.ext.min.css")
+	BANano.Header.AddJavascriptFile("material.components.ext.min.js")
+	'BANano.Header.AddCSSFile("getmdl-select.min.css")
+	'BANano.Header.AddJavascriptFile("getmdl-select.min.js")
+	'BANano.Header.AddJavascriptFile("jquery.touchSwipe.min.js")
+	'BANano.Header.AddJavascriptFile("mdlDrawerPull.min.js")
+	BANano.Header.AddCSSFile("mdl-selectfield.min.css")
+	BANano.Header.AddJavascriptFile("mdl-selectfield.min.js")
+	
+	'
+	
+	BANano.Header.AddJavascriptFile("moment.js")
+	BANano.Header.AddCSSFile("gijgocore.min.css")
+	BANano.Header.AddCSSFile("gijgodatepicker.min.css")
+	BANano.Header.AddCSSFile("gijgotimepicker.min.css")
+	BANano.Header.AddCSSFile("gijgodatetimepicker.min.css")
+	'
+	BANano.Header.AddJavascriptFile("gijgocore.min.js")
+	BANano.Header.AddJavascriptFile("gijgodatepicker.min.js")
+	BANano.Header.AddJavascriptFile("gijgotimepicker.min.js")
+	BANano.Header.AddJavascriptFile("gijgodatetimepicker.min.js")
+		
+	BANano.BuildAsB4XLib("0.02")
 	ExitApplication
 End Sub
 

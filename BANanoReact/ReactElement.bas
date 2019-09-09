@@ -15,10 +15,10 @@ Sub Class_Globals
 	Private style As Map
 	Private classList As Map
 	Private className As String
-	Private state As Map
-	Private ref As Map
+	Public state As Map
 	Private BANano As BANano   'ignore
 	Private BanReact As BANanoReact
+	Public ref As BANanoObject
 	'
 	'Type background(backgroundAttachment As Object, backgroundColor As Object, backgroundImage As Object, backgroundPositionX As Object, backgroundPositionY As Object, backgroundRepeat As Object)
 	'Type backgroundPosition(backgroundPositionX As Object, backgroundPositionY As Object)
@@ -43,15 +43,76 @@ Public Sub Initialize(BR As BANanoReact, sTag As String) As ReactElement
 	classList.Initialize 
 	className = ""
 	state.Initialize
-	ref.Initialize
+	ref = R.RunMethod("createRef", Null)
+	SetProp("ref", ref)
+	Return Me
+End Sub
+
+'get props
+Sub GetProps As Map
+	Dim prps As Map = Element.GetField("props").result
+	Return prps
+End Sub
+
+'get children
+Sub GetChildren As BANanoObject
+	Dim childs As BANanoObject = Element.GetField("props").GetField("children")
+	Return childs
+End Sub
+
+'clone the element
+Sub Clone(sprops As Map) As BANanoObject
+	Dim eClone As BANanoObject = r.RunMethod("cloneElement", Array(Element, sprops))
+	Return eClone
+End Sub
+
+'sub count children
+Sub CountChildren() As Int
+	Dim cnt As Int = r.GetField("Children").RunMethod("count", Array(Element)).Result
+	Return cnt
+End Sub
+
+'sub children to array
+Sub GetChildren2Array() As List
+	Dim ar As List = r.GetField("Children").RunMethod("toArray", Array(Element)).result
+	Return ar
+End Sub
+
+'set ref
+Sub SetRef(rf As BANanoObject) As ReactElement
+	SetProp("ref", rf)
+	Return Me
+End Sub
+
+'on submit
+Sub SetOnSubmit(module As Object, methodName As String) As ReactElement
+	Dim e As BANanoEvent
+	Dim cb As BANanoObject = BANano.CallBack(module, methodName, Array(e))
+	SetProp("onSubmit", cb)
 	Return Me
 End Sub
 
 'set click event
-Sub SetOnClick1(module As Object, method As String) As ReactElement
+Sub SetOnClick(module As Object, methodName As String) As ReactElement
 	Dim e As BANanoEvent
-	Dim cb As BANanoObject = BANano.CallBack(module, method, Array(e))
-	SetOnClick(cb)
+	Dim cb As BANanoObject = BANano.CallBack(module, methodName, Array(e))
+	SetProp("onClick", cb)
+	Return Me
+End Sub
+
+'set change event
+Sub SetOnChange(module As Object, methodName As String) As ReactElement
+	Dim e As BANanoEvent
+	Dim cb As BANanoObject = BANano.CallBack(module, methodName, Array(e))
+	SetProp("onChange", cb)
+	Return Me
+End Sub
+
+'set keypress event
+Sub SetOnKeyPress(module As Object, methodName As String) As ReactElement
+	Dim e As BANanoEvent
+	Dim cb As BANanoObject = BANano.CallBack(module, methodName, Array(e))
+	SetProp("onKeyPress", cb)
 	Return Me
 End Sub
 
@@ -186,6 +247,7 @@ Sub SetID(t As String) As ReactElement
 	If t <> "" Then
 		ID = t
 		SetProp("id", ID)
+		SetProp("key", ID)
 	End If
 	Return Me
 End Sub
@@ -226,29 +288,33 @@ Sub SetProp(k As String, v As Object) As ReactElement
 	If k = "class" Then
 		AddClass(v)
 		Return Me
+	else If k.StartsWith("style.") Then
+		Dim styleName As String = MvField(k,2,".")
+		SetStyle(styleName, v)
+		Return Me
 	End If
 	props.Put(k,v)
 	Return Me	
 End Sub
 
-'set the ref property
-Sub SetRef(k As String, v As Object) As ReactElement
-	ref.Put(k,v)
-	Return Me	
+'update the state in real time, built in .setState method
+Sub SetStateRealTime(m As Map) As ReactElement
+	Element.RunMethod("setState", Array(m))
+	state = Element.RunMethod("getState", Null).result
+	Return Me
 End Sub
 
-
-'set the initial state
+'set the state
 Sub SetState(k As String, v As Object) As ReactElement
 	state.Put(k, v)
-	Return Me	
+	Return Me
 End Sub
 
-'set multiple states
+'set multiple states during design
 Sub SetStates(m As Map) As ReactElement
 	For Each k As String In m.Keys
 		Dim v As Object = m.Get(k)
-		SetState(k, v)
+		state.Put(k, v)
 	Next
 	Return Me
 End Sub
@@ -421,28 +487,23 @@ Sub SetProps(propsMap As Map) As ReactElement
 	If propsMap = Null Then Return Me
 	For Each k As String In propsMap.Keys
 		Dim v As Object = propsMap.Get(k)
-		'is it a style
-		If k.StartsWith("style.") Then
-			Dim styleName As String = MvField(k,2,".")
-			SetStyle(styleName, v)
-		Else	
-			SetProp(k,v)
-		End If
+		SetProp(k,v)
 	Next
 	Return Me
 End Sub
 
-'set the style
-Sub SetStyle(k As String, v As String) As ReactElement
-	style.Put(k,v)
-	Return Me	
+'set style
+Sub SetStyle(k As String, v As Object) As ReactElement
+	style.Put(k, v)
+	Return Me
 End Sub
 
 'set multiple styles
 Sub SetStyles(m As Map) As ReactElement
+	If m = Null Then Return Me
 	For Each k As String In m.Keys
 		Dim v As String = m.Get(k)
-		SetStyle(k,v)
+		style.Put(k, v)
 	Next
 	Return Me
 End Sub
@@ -556,9 +617,6 @@ End Sub
 
 'create the element
 Sub CreateElement
-	If ref.Size > 0 Then
-		props.Put("ref", ref)
-	End If
 	If classList.Size > 0 Then
 		Dim mk As List = MapKeys2List(classList)
 		className = Join(" ", mk)
@@ -593,16 +651,7 @@ Sub CreateElement
 			Element = r.RunMethod("createElement", Array(elTag, props, children))
 		End If
 	End Select
-End Sub
-
-'get the state
-Sub GetState(prop As String) As Object
-	If state.ContainsKey(prop) Then
-		Dim v As Object = state.Get(prop)
-		Return v
-	Else
-		Return ""
-	End If
+	state = Element.GetField("state").result
 End Sub
 
 'get the property
@@ -611,15 +660,19 @@ Sub GetProp(prop As String) As Object
 		Dim v As Object = props.Get(prop)
 		Return v
 	Else
-		Return ""
+		Return Null
 	End If
 End Sub
 
-
-'update the state
-'Sub SetState(k as string, v as object)
-'	Element.RunMethod("setState", Array(k, v))
-'End Sub
+'get the state
+Sub GetState(k As String) As Object
+	If state.ContainsKey(k) Then
+		Dim v As Object = state.Get(k)
+		Return v
+	Else
+		Return Null
+	End If
+End Sub
 
 'convert map keys to a list
 private Sub MapKeys2List(m As Map) As List
@@ -703,23 +756,12 @@ Sub SetOnSelect(cb As BANanoObject) As ReactElement
 End Sub
 
 
-'on click event
-Sub SetOnClick(cb As BANanoObject) As ReactElement
-	SetProp("onClick", cb)
-	Return Me
-End Sub
-
 'on focus
 Sub SetOnFocus(cb As BANanoObject) As ReactElement
 	SetProp("onFocus", cb)
 	Return Me
 End Sub
 
-'on submit
-Sub SetOnSubmit(cb As BANanoObject) As ReactElement
-	SetProp("onSubmit", cb)
-	Return Me
-End Sub
 
 'on input
 Sub SetOnInput(cb As BANanoObject) As ReactElement
@@ -787,22 +829,9 @@ Sub SetOnBlur(cb As BANanoObject) As ReactElement
 	Return Me
 End Sub
 
-
-'on change event
-Sub SetOnChange(cb As BANanoObject) As ReactElement
-	SetProp("onChange", cb)
-	Return Me
-End Sub
-
 'on key down
 Sub SetOnKeyDown(cb As BANanoObject) As ReactElement
 	SetProp("onKeyDown", cb)
-	Return Me
-End Sub
-
-'on key press
-Sub SetOnKeyPress(cb As BANanoObject) As ReactElement
-	SetProp("onKeyPress", cb)
 	Return Me
 End Sub
 

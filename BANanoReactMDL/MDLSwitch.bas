@@ -1,5 +1,5 @@
 ﻿B4J=true
-Group=Default Group\MDL
+Group=Default Group
 ModulesStructureVersion=1
 Type=Class
 Version=7.51
@@ -25,6 +25,20 @@ Public Sub Initialize(BR As BANanoReact, sid As String) As MDLSwitch
 	Span = BR.span("").AddClass("mdl-switch__label")
 	Return Me
 End Sub
+
+'set default value
+Sub SetDefaultValue(dv As Object) As MDLSwitch
+	Input.SetDefaultValue(dv)
+	Return Me
+End Sub
+
+
+'on change event
+Sub SetOnChange(module As Object, methodName As String) As MDLSwitch
+	Input.SetOnChange(module, methodName)
+	Return Me
+End Sub
+
 
 'add to parent
 Sub Pop(parent As ReactElement)

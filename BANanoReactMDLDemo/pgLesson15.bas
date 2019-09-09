@@ -11,6 +11,10 @@ Sub Process_Globals
 	Private BR As BANanoReact
 	Private lay As MDLLayout
 	Private snack As MDLSnackBar
+	Private dp As MDLDatePicker
+	Private tp As MDLTimePicker
+	Private dtp As MDLDateTimePicker
+	Private dd As MDLDropDown
 End Sub
 
 Sub Show
@@ -18,54 +22,57 @@ Sub Show
 	Dim app As ReactElement = BR.Initialize
 	'create a layout
 	lay.Initialize(BR, "lay1")
+	'lay.Drawer.SetOnClick(Me, "drawer_click")
+	'lay.Header.SetOnClick(Me, "header_click")
 	'
 	'*** HEADER ***
 	'fixed header
 	lay.SetFixedHeader(True)
-	lay.Header.SetWaterFall(True)
+	'lay.Header.SetWaterFall(True)
+	lay.Header.SetNavLargeScreensOnly(True)
 	'set the header title
-	lay.Header.TopRow.SetTitle("BANanoReactMDL")
+	lay.Header.SetTitle("BANanoReactMDL")
 	
 	'add a spacer so that everything is on the right
-	lay.Header.TopRow.SetSpacer(True)
+	lay.Header.SetSpacer(True)
 	'add some links
-	lay.Header.TopRow.AddLink("lnk1","#","","Link 1")
-	lay.Header.TopRow.AddLink("lnk2","#","","Link 2")
-	lay.Header.TopRow.AddLink("lnk3","#","","Link 3")
-	lay.Header.TopRow.SetNavigation(True)
+	lay.Header.AddLink("lnk1","#","","Link 1")
+	lay.Header.AddLink("lnk2","#","","Link 2")
+	lay.Header.AddLink("lnk3","#","","Link 3")
+	lay.Header.SetNavigation(True)
 	
 	'add a search input control
-	lay.Header.TopRow.SetSearch("search")
+	'lay.Header.SetSearch("search")
 	'add a menu button icon
-	lay.Header.TopRow.SetButtonMenu("hdrMenu")
+	'lay.Header.SetButtonMenu("hdrMenu")
 	'add menu and link it to the button icon
-	Dim hdrMenu As MDLMenu
-	hdrMenu.Initialize(BR, "hdrMenuChild")
+	'Dim hdrMenu As MDLMenu
+	'hdrMenu.Initialize(BR, "hdrMenuChild")
 	'specify the element id to link to
-	hdrMenu.SetFor("hdrMenu")
+	'hdrMenu.SetFor("hdrMenu")
 	'indicate the location of the menu relative to the button
-	hdrMenu.SetBottomRight(True)
+	'hdrMenu.SetBottomRight(True)
 	'add menu items
-	hdrMenu.AddMenuItem("hdrAbout", "About",False,False)
-	hdrMenu.AddMenuItem("hdrContact", "Contact", False, False)
-	hdrMenu.AddMenuItem("hdrLegal", "Legal Information", False, False)
+	'hdrMenu.AddMenuItem("hdrAbout", "About",False,False)
+	'hdrMenu.AddMenuItem("hdrContact", "Contact", False, False)
+	'hdrMenu.AddMenuItem("hdrLegal", "Legal Information", False, False)
 	'add menu to the header
-	lay.Header.TopRow.SetMenu(hdrMenu)
+	'lay.Header.SetMenu(hdrMenu)
 	'
 	'**** SECOND ROW
-	lay.Header.BottomRow.SetSpacer(True)
-	lay.Header.BottomRow.AddLink("aboutx","#","","About")
-	lay.Header.BottomRow.AddLink("homex","#","","Home")
-	lay.Header.BottomRow.SetNavigation(True)
+	'lay.Header.BottomRow.SetSpacer(True)
+	'lay.Header.BottomRow.AddLink("aboutx","#","","About")
+	'lay.Header.BottomRow.AddLink("homex","#","","Home")
+	'lay.Header.BottomRow.SetNavigation(True)
 	
 	'**** TABS ON HEADER ****
 	'lay.SetFixedTabs(True)
-	lay.Header.AddTab("tab1", "Tab 1", BR.CreateElement("div",Null,"This is my first tab!"))
-	lay.Header.AddTab("tab2", "Tab 2", Null)
-	lay.Header.AddTab("tab3", "Tab 3", Null)
-	lay.Header.AddTab("tab4", "Tab 4", Null)
-	lay.Header.AddTab("tab5", "Tab 5", Null)
-	lay.Header.AddTab("tab6", "Tab 6", BR.CreateElement("div",Null,"This is my sixth tab!"))
+	'lay.Header.AddTab("tab1", "Tab 1", BR.CreateElement("div",Null,"This is my first tab!"))
+	'lay.Header.AddTab("tab2", "Tab 2", Null)
+	'lay.Header.AddTab("tab3", "Tab 3", Null)
+	'lay.Header.AddTab("tab4", "Tab 4", Null)
+	'lay.Header.AddTab("tab5", "Tab 5", Null)
+	'lay.Header.AddTab("tab6", "Tab 6", BR.CreateElement("div",Null,"This is my sixth tab!"))
 	
 	
 	'**** DRAWER ****
@@ -74,8 +81,8 @@ Sub Show
 	lay.Drawer.SetTitle("Stranger Things")
 	'lay.Drawer.AddClass("mdl-color--blue-grey-900 mdl-color-text--blue-grey-50")
 	'lay.Drawer.AddClass("mdl-color--grey-100 mdl-color-text--grey-600")
-	'lay.Drawer.SetProfile("./assets/mike.jpg","Anele Mbanga")
-	'lay.Drawer.ProfileMenu.AddMenuItem("","Send Email",False,False)
+	lay.Drawer.SetProfile("./assets/mike.jpg","Anele Mbanga")
+	lay.Drawer.ProfileMenu.AddMenuItem("","Send Email",False,False)
 	
 	'drawer navigation
 	'lay.Drawer.Nav.AddClass("mdl-color--blue-grey-800")
@@ -105,8 +112,7 @@ Sub Show
 	'lay.Content.AddClass("mdl-color--grey-100")
 	'add a grid
 	Dim grid As MDLGrid
-	grid.Initialize(BR, "grid")
-	'
+	grid.Initialize(BR, "grid").SetStyle(CreateMap("width":"100%"))
 	lay.Page.AddElement(grid.Grid)
 	
 	'**** FOOTER ****
@@ -122,11 +128,20 @@ Sub Show
 	div.Render("grid")
 	'
 	'add events after the body is rendered
-	Dim e As BANanoEvent
-	lay.OnItemClick(BANano.CallBack(Me,"item_click", Array(e)))
-	
+	'
 	'*** IMPORTANT
 	MDL.upgrade
+	
+	'BR.OnItemClick("#lay1-drawer-nav", Me, "drawer_click")
+	lay.Drawer.OnItemClick(Me, "drawer_click")
+	lay.Header.OnItemClick(Me, "header_click")
+	
+	'DoTexts
+End Sub
+
+Sub header_click(e As BANanoEvent)
+	Dim selID As String = lay.GetDrawerItemID(e)
+	Log(selID)
 End Sub
 
 Sub DoLists
@@ -161,23 +176,24 @@ Sub DoLists
 	Dim li5 As MDLListItem
 	li5.Initialize(BR, "li5")
 	li5.PrimaryContent.SetAvatar("person").SetLabel("Mashy Radio")
-	li5.SecondaryContent.SetRadio("option1", "settings","1",True)
+	li5.SecondaryContent.SetRadio("option1", "settings", Me, "changethings")
 	ml.AddListItem(li5)
 	'
 	Dim li6 As MDLListItem
 	li6.Initialize(BR, "li6")
 	li6.PrimaryContent.SetAvatar("person").SetLabel("Mashy CheckBox")
-	li6.SecondaryContent.SetCheckBox("chk1", "checkit","0",True)
+	li6.SecondaryContent.SetCheckBox("chk1", "checkit", Me, "changethings")
 	ml.AddListItem(li6)
 	'
 	Dim li7 As MDLListItem
 	li7.Initialize(BR, "li7")
 	li7.PrimaryContent.SetAvatar("person").SetLabel("Mashy Switch")
-	li7.SecondaryContent.SetSwitch("swt1", "swt1", "0", False)
+	li7.SecondaryContent.SetSwitch("swt1", "swt1", Me, "changethings")
 	ml.AddListItem(li7)
 	'
 	div.AddElement(ml.List)
 	div.Render("grid")
+	MDL.upgrade
 End Sub
 
 Sub DoFooter
@@ -227,7 +243,7 @@ Sub DoFooter
 End Sub
 
 
-Sub Item_Click(e As BANanoEvent)
+Sub drawer_Click(e As BANanoEvent)
 	Dim selID As String = lay.GetDrawerItemID(e)
 	Select Case selID
 	Case "badges"
@@ -265,8 +281,6 @@ Sub Item_Click(e As BANanoEvent)
 	Case "typography"
 		DoTypography		
 	End Select
-	'*** IMPORTANT
-	MDL.upgrade
 End Sub
 
 Sub DoTypography
@@ -301,7 +315,7 @@ Sub DoTypography
 	'
 	mdiv.AddElements(Array(sh.item, BR.br(True), cap.Item))
 	mdiv.Render("grid")
-	
+	MDL.upgrade
 End Sub
 
 
@@ -324,7 +338,7 @@ Sub DoMenus
 	div.AddElement(myMenu.Menu)
 	
 	div.Render("grid")
-	
+	MDL.upgrade
 	
 End Sub
 
@@ -334,36 +348,118 @@ Sub DoTexts
 	div.AddElement(BR.CreateElement("p",CreateMap(),"Text"))
 	div.AddBR
 	'
+	Dim fi As MDLFileInput
+	fi.Initialize(BR, "fi1").SetLabel("Select File").SetName("fi1")
+	div.AddReactElement(fi.FileInput)
+	div.AddBR
+	'
+	dp.Initialize(BR, "dp1").SetLabel("Date Picker")
+	dp.SetFormat("yyyy-mm-dd")
+	dp.SetHeader(True)
+	'dp.SetFooter(True)
+	dp.SetModal(True)
+	dp.SetLocaleSpanish(True)
+	div.AddReactElement(dp.DatePicker)
+	div.AddBR
+'
+	tp.Initialize(BR, "tp1").SetLabel("Time Picker")
+	tp.SetLocaleSpanish(True)
+	tp.SetFormat("HH:MM")
+	div.AddReactElement(tp.TimePicker)
+	div.AddBR
+	'
+	dtp.Initialize(BR, "dtp1").SetLabel("Date Time Picker")
+	dtp.SetLocaleSpanish(True)
+	dtp.SetFormat("yyyy-dd-mm HH:MM")
+	div.AddReactElement(dtp.DateTimePicker)
+	div.AddBR
+	 
+	dd.Initialize(BR, "dd").SetLabel("Drop Down")
+	dd.AddItem("opt1", "Option 1")
+	dd.AddItem("opt2", "Option 2")
+	dd.AddItem("opt3", "Option 3")
+	dd.AddItem("opt4", "Option 4")
+	div.AddReactElement(dd.DropDown)
+	div.AddBR
+	 
+	
+'	Dim cbo As MDLComboBox
+'	cbo.Initialize(BR, "cbo1")
+'	cbo.SetLabel("Country")
+'	cbo.SetName("country")
+'	'cbo.SetFixedHeight(True)
+'	cbo.SetSelected("FR")
+'	cbo.AddItem("DEU", "Germany")
+'	cbo.AddItem("BLR", "Belarus")
+'	cbo.AddItem("RUS", "Russia")
+'	cbo.AddItem("BR", "Brazil")
+'	cbo.AddItem("ES", "Estonia")
+'	cbo.AddItem("FI", "Finland")
+'	cbo.AddItem("FR", "France")
+'	cbo.AddItem("DE", "Germany")
+'	cbo.AddItem("PL", "Poland")
+'	div.AddReactElement(cbo.ComboBox)
+'	div.AddBR
+'	'
+	
+
+	Dim sf As MDLSelectField
+	sf.Initialize(BR, "sf1")
+	sf.SetLabel("Country")
+	sf.SetName("country")
+	sf.AddItem("", "")
+	sf.AddItem("DEU", "Germany")
+	sf.AddItem("BLR", "Belarus")
+	sf.AddItem("RUS", "Russia")
+	sf.AddItem("BR", "Brazil")
+	sf.AddItem("ES", "Estonia")
+	sf.AddItem("FI", "Finland")
+	sf.AddItem("FR", "France")
+	sf.AddItem("DE", "Germany")
+	sf.AddItem("PL", "Poland")
+	div.AddReactElement(sf.SelectField)
+	div.AddBR
+		
+	'
 	Dim txt As MDLText
 	txt.Initialize(BR, "txt1").SetLabel("First Name").SetHint("Enter the first name!")
-	txt.SetFloatingLabel(True).SetFixFloatingLabel(True)
 	div.AddElement(txt.Text)
-	
 	'
 	div.AddBR
 	'
 	Dim txtnum As MDLText
 	txtnum.Initialize(BR, "txtn1").SetLabel("Numeric").SetNumeric(True).SetErrorMessage("You have not entered a number!")
-	txtnum.SetFloatingLabel(True)
 	div.AddElement(txtnum.Text)
 	div.AddBR
 	'
 	Dim ta As MDLText
 	ta.Initialize(BR, "ta").SetLabel("Text Area").SetTextArea(True).SetRows(5)
-	ta.SetFloatingLabel(True)
 	div.AddElement(ta.Text)
 	div.AddBR
 	'
 	Dim search As MDLSearch
-	search.Initialize(BR, "search1").SetFloatingLabel(True).SetLabel("Enter your search string here...")
+	search.Initialize(BR, "search1").SetLabel("Enter your search string here...")
 	div.AddElement(search.Search)
 	div.AddBR
-	'
 	div.Render("grid")
-	
-	'snack bar
+	MDL.upgrade
+	MDL.upgrade
+	' render the date picker
+	dp.Render
+	tp.Render 
+	dtp.Render
+	dd.render
 End Sub
 
+#if javascript
+	function comboRefresh() {
+        getmdlSelect.init(".getmdl-select");
+    }
+#End If
+
+Sub ComboRefresh
+	BANano.RunJavascriptMethod("comboRefresh",Null)
+End Sub
 
 Sub showSnack1(e As BANanoEvent)
 	snack.Toast("This is my toast!")
@@ -383,17 +479,16 @@ Sub DoSnackBar
 	div.AddBR
 	'
 	Dim btnx As MDLButton
-	btnx.Initialize(BR, "btnShow").SetLabel("Show SnackBar").SetRaised(True)
-	btnx.SetOnClick(BANano.CallBack(Me,"showSnack",Null))
+	btnx.Initialize(BR, "btnShow").SetLabel("Show SnackBar").SetRaised(True).SetOnClick(Me,"showSnack")
 	div.AddElement(btnx.Button)
 	div.AddBR
 	
 	Dim btnx1 As MDLButton
-	btnx1.Initialize(BR, "btnShow").SetLabel("Show Toast")
-	btnx1.SetOnClick(BANano.CallBack(Me,"showSnack1",Null)).SetRaised(True)
+	btnx1.Initialize(BR, "btnShow").SetLabel("Show Toast").SetOnClick(Me,"showSnack1").SetRaised(True)
 	div.AddElement(btnx1.Button)
 	div.AddBR
 	div.Render("grid")	
+	MDL.upgrade
 End Sub
 
 Sub Tooltips
@@ -415,6 +510,11 @@ Sub Tooltips
 	'
 	div.AddElements(Array(divt.item, print.Item, tt1.Tooltip, tt2.tooltip))
 	div.Render("grid")
+	MDL.upgrade
+End Sub
+
+Sub ChangeThings(e As BANanoEvent)
+	Log(e)
 End Sub
 
 
@@ -423,42 +523,51 @@ Sub Toggles
 	div.AddElement(BR.CreateElement("p",CreateMap(),"Toggles"))
 	'checkbox
 	Dim chkBox As MDLCheckBox
-	chkBox.Initialize(BR, "chk1").SetLabel("My CheckBox").SetChecked(True)
-	
+	chkBox.Initialize(BR, "chk1").SetLabel("My CheckBox").SetOnChange(Me, "changethings")
 	div.AddElement(chkBox.CheckBox)
 	div.AddBR
+	div.addbr
 	'radios
+	
 	Dim rad1 As MDLRadio
-	rad1.Initialize(BR, "rad1").SetLabel("First").SetChecked(True).SetName("myoptions").SetValue("1")
-	'
+	rad1.Initialize(BR, "rad1").SetLabel("First").SetName("myoptions").SetOnChange(Me, "changethings")
 	div.AddElement(rad1.Radio)
+	div.AddBR
+	div.addbr
 	'
 	Dim rad2 As MDLRadio
-	rad2.Initialize(BR, "rad2").SetLabel("Second").SetName("myoptions").SetValue("2")
-	'
+	rad2.Initialize(BR, "rad2").SetLabel("Second").SetName("myoptions").SetOnChange(Me, "changethings")
 	div.AddElement(rad2.Radio)
 	div.AddBR
+	div.AddBR
+	
 	'icon toggle
 	Dim it1 As MDLIconToggle
-	it1.Initialize(BR, "it1").SetIcon("format_bold").SetChecked(True)
-	'
+	it1.Initialize(BR, "it1").SetIcon("format_bold").SetOnChange(Me, "changethings")
 	div.AddElement(it1.IconToggle)
+	div.addbr
+	div.addbr
 	'
 	Dim it2 As MDLIconToggle
-	it2.Initialize(BR, "it2").SetIcon("format_italic")
-	'
+	it2.Initialize(BR, "it2").SetIcon("format_italic").SetOnChange(Me, "changethings")
 	div.AddElement(it2.IconToggle)
 	div.AddBR
+	div.AddBR
+	
 	'switch
 	Dim sw1 As MDLSwitch
-	sw1.Initialize(BR, "sw1").SetChecked(True)
-	Dim sw2 As MDLSwitch
-	sw2.Initialize(BR, "sw2")
-	'
-	div.AddElements(Array(sw1.Switch, sw2.switch))
+	sw1.Initialize(BR, "sw1").SetOnChange(Me, "changethings")
+	div.AddElement(sw1.Switch)
 	div.AddBR
-	div.AddHR
+	div.AddBR
+	
+	Dim sw2 As MDLSwitch
+	sw2.Initialize(BR, "sw2").SetOnChange(Me, "changethings")
+	div.AddElement(sw2.Switch)
+	div.AddBR
+	div.AddBR
 	div.Render("grid")
+	MDL.upgrade
 End Sub
 
 Sub Sliders
@@ -466,14 +575,15 @@ Sub Sliders
 	div.AddElement(BR.CreateElement("p",CreateMap(),"Sliders"))
 	'
 	Dim sl1 As MDLSlider
-	sl1.Initialize(BR, "sl1").SetMin("0").SetMax("100").SetValue("0")
+	sl1.Initialize(BR, "sl1").SetMin("0").SetMax("100").SetDefaultValue("0").SetOnChange(Me, "changethings")
 	 	
 	Dim sl2 As MDLSlider
-	sl2.Initialize(BR, "sl2").SetMin("0").SetMax("100").SetValue("25").SetStep("5").SetWidth("300px")
+	sl2.Initialize(BR, "sl2").SetMin("0").SetMax("100").SetDefaultValue("25").SetStep("5").SetWidth("300px").SetOnChange(Me, "changethings")
 	 
 	div.AddElements(Array(sl1.Slider, sl2.slider))
 	div.AddHR
 	div.Render("grid")
+	MDL.upgrade
 End Sub
 
 
@@ -504,6 +614,7 @@ Sub Loading
 	div.AddElement(spn2.Spinner)
 	div.addbr
 	div.Render("grid")
+	MDL.upgrade
 End Sub
 
 Sub Chips
@@ -544,6 +655,7 @@ Sub Chips
 	div.AddElement(dcontact_chip.Chip)
 	div.AddBR
 	div.Render("grid")
+	MDL.upgrade
 End Sub
 
 Sub Cards
@@ -643,7 +755,7 @@ Sub Cards
 	div.AddElement(card5.Card)
 	'
 	div.Render("grid")
-	
+	MDL.upgrade
 End Sub
 
 Sub Badges_Show
@@ -664,6 +776,7 @@ Sub Badges_Show
 	'
 	div.AddElement(BR.CreateElement("a", CreateMap("data-badge":"5","href":"#","className":"mdl-badge mdl-badge--no-background"),"This link has a badge."))
 	div.Render("grid")
+	MDL.upgrade
 End Sub
 
 Sub Buttons_Show
@@ -714,7 +827,7 @@ Sub Buttons_Show
 	div.AddBR
 	'
 	div.Render("grid")
-	
+	MDL.upgrade
 End Sub
 
 
@@ -762,6 +875,7 @@ Sub DoTabs
 	div.AddElement(tabs.Tabs)
 	'
 	div.Render("grid")
+	MDL.upgrade
 End Sub
 
 
@@ -817,6 +931,7 @@ Sub DoLayouts
 		Dim rk As String = $"gr4c${r}"$
 		BR.Render(BR.CreateElement("p",Null,r), rk)
 	Next
+	MDL.upgrade
 End Sub
 
 Sub DoTable
@@ -842,6 +957,7 @@ Sub DoTable
 	'
 	div.AddElement(tbl.Table)
 	div.Render("grid")
+	MDL.upgrade
 End Sub
 
 Sub DoCardsInGrid
@@ -928,4 +1044,5 @@ Sub DoCardsInGrid
 	div.AddElement(grid.Grid)
 	'
 	div.Render("grid")
+	MDL.upgrade
 End Sub

@@ -1,5 +1,5 @@
 ﻿B4J=true
-Group=Default Group\MDL
+Group=Default Group
 ModulesStructureVersion=1
 Type=Class
 Version=7.51
@@ -16,6 +16,12 @@ Public Sub Initialize(BR As BANanoReact, sid As String) As MDLColumn
 	ID = sid
 	ColumnInt = BR.div(sid).AddClass("mdl-cell")
 	BanReact = BR
+	Return Me
+End Sub
+
+'set text align
+Sub SetTextAlign(align As String) As MDLColumn
+	ColumnInt.SetStyle("text-align", align)
 	Return Me
 End Sub
 
@@ -135,6 +141,17 @@ Sub SetDeviceHidden(phone As Boolean, tablet As Boolean, desktop As Boolean) As 
 	Return Me
 End Sub
 
+'on click event
+Sub SetOnClick(module As Object, methodName As String) As MDLColumn
+	ColumnInt.SetOnClick(module, methodName)
+	Return Me
+End Sub
+
+'add a react element
+Sub AddReactElement(el As ReactElement) As MDLColumn
+	ColumnInt.AddReactElement(el)
+	Return Me
+End Sub
 
 'get the column
 Sub Column As ReactElement

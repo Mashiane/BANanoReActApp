@@ -9,6 +9,7 @@ Sub Class_Globals
 	Private BANano As BANano   'ignore
 	Public React As BANanoObject
 	Public ReactDOM As BANanoObject
+	Public JQuery As BANanoJQuery
 	Private Themes As Map
 End Sub
 
@@ -19,6 +20,7 @@ Public Sub Initialize As ReactElement
 	'initialize the react dom library
 	ReactDOM.Initialize("ReactDOM")
 	Themes.Initialize
+	JQuery.Initialize
 	'empty the body
 	Dim el As BANanoElement = BANano.GetElement("#body")
 	el.Empty
@@ -28,11 +30,52 @@ Public Sub Initialize As ReactElement
 	Return app
 End Sub
 
-'add on item click
-Sub OnItemClick(selector As String, cb As BANanoObject)
-	Dim el As BANanoElement = BANano.GetElement(selector)
-	el.AddEventListener("click", cb, False)
+'clone the element
+Sub CloneElement(elSource As BANanoObject, props As Map) As BANanoObject
+	Dim clone As BANanoObject = React.RunMethod("cloneElement", Array(elSource, props))
+	Return clone
 End Sub
+
+'sub count children
+Sub ChildrenCount(cc As BANanoObject) As Int
+	Dim cnt As Int = React.GetField("Children").RunMethod("count", Array(cc)).Result
+	Return cnt
+End Sub
+
+'sub children to array
+Sub ChildrenToArray(cc As BANanoObject) As List
+	Dim ar As List = React.GetField("Children").RunMethod("toArray", Array(cc)).result
+	Return ar
+End Sub
+
+'get the current reference
+Sub GetRef(ref As BANanoObject) As BANanoObject
+	Dim rr As BANanoObject = ref.GetField("current")
+	Return rr
+End Sub
+
+'get reference value
+Sub GetReferenceValue(ref As BANanoObject) As Object
+	Dim rr As Object = ref.GetField("current").GetField("value").Result
+	Return rr
+End Sub
+
+'add on item click
+Sub OnItemClick(selector As String, module As Object, methodName As String)
+	Dim el As BANanoElement = BANano.GetElement(selector)
+	Dim e As BANanoEvent
+	Dim cb As BANanoObject = BANano.CallBack(module, methodName, Array(e))
+	el.AddEventListener("click", cb, True)
+End Sub
+
+'add on event
+Sub OnEvent(selector As String, eventName As String, module As Object, methodName As String)
+	Dim el As BANanoElement = BANano.GetElement(selector)
+	Dim e As BANanoEvent
+	Dim cb As BANanoObject = BANano.CallBack(module, methodName, Array(e))
+	el.AddEventListener(eventName, cb, True)
+End Sub
+
 
 'get selected nav drawe item that was clicked
 Sub GetIDFromEvent(e As BANanoEvent) As String

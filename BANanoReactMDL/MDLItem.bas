@@ -1,5 +1,5 @@
 ﻿B4J=true
-Group=Default Group\MDL
+Group=Default Group
 ModulesStructureVersion=1
 Type=Class
 Version=7.51
@@ -26,6 +26,11 @@ Sub Pop(parent As ReactElement)
 	parent.AddElement(Item)
 End Sub
 
+'set layout title
+Sub SetLayoutTitle(b As Boolean) As MDLItem
+	ItemInt.AddClass("mdl-layout-title")
+	Return Me
+End Sub
 
 'small screens only
 Sub SetSmallScreensOnly(b As Boolean) As MDLItem

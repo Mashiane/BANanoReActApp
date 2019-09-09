@@ -1,5 +1,5 @@
 ﻿B4J=true
-Group=Default Group\MDL
+Group=Default Group
 ModulesStructureVersion=1
 Type=Class
 Version=7.51
@@ -88,7 +88,6 @@ Sub Chip As ReactElement
 	If bContact Then
 		ChipInt.AddElement(prefix)
 	End If
-	'mdl-color--teal mdl-color-text--white">A</span>
 	
 	'text
 	Dim txt As MDLItem
@@ -105,3 +104,10 @@ Sub Chip As ReactElement
 	End If
 	Return ChipInt	 
 End Sub
+
+'on click event
+Sub SetOnClick(module As Object, methodName As String) As MDLChip
+	ChipInt.SetOnClick(module, methodName)
+	Return Me
+End Sub
+

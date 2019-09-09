@@ -1,5 +1,5 @@
 ﻿B4J=true
-Group=Default Group\MDL
+Group=Default Group
 ModulesStructureVersion=1
 Type=Class
 Version=7.51
@@ -19,23 +19,47 @@ End Sub
 
 'initialize the button
 Public Sub Initialize(BR As BANanoReact, sid As String) As MDLText
-	ID = sid
-	TextInt = BR.div(sid)
-	TextInt.AddClass("mdl-textfield mdl-js-textfield")
+	ID = sid.tolowercase
+	TextInt = BR.div($"${ID}-div"$).AddClass("mdl-textfield mdl-js-textfield")
 	'
 	Label = BR.label($"${ID}-label"$).SetFor(ID & "-input").AddClass("mdl-textfield__label")
 	'
-	Input = BR.input($"${ID}-input"$).AddClass("mdl-textfield__input").SetType("text")
+	Input = BR.input($"${ID}"$).AddClass("mdl-textfield__input").SetType("text")
 	'
-	TextArea = BR.textarea($"${ID}-input"$).AddClass("mdl-textfield__input").SetType("text")
+	TextArea = BR.textarea($"${ID}"$).AddClass("mdl-textfield__input").SetType("text")
 	'
 	span = BR.span("").AddClass("mdl-textfield__error")
 	'
 	bTextArea = False
 	SpanContent = False
 	LabelContent = False
+	SetFloatingLabel(True)
+	
 	Return Me
 End Sub
+
+'set default value
+Sub SetDefaultValue(dv As Object) As MDLText
+	Input.SetDefaultValue(dv)
+	TextArea.SetDefaultValue(dv)
+	Return Me
+End Sub
+
+
+'on change event
+Sub SetOnChange(module As Object, methodName As String) As MDLText
+	Input.SetOnChange(module, methodName)
+	TextArea.SetOnChange(module, methodName)
+	Return Me
+End Sub
+
+'on keypress event
+Sub SetOnKeyPress(module As Object, methodName As String) As MDLText
+	Input.SetOnKeyPress(module, methodName)
+	TextArea.SetOnKeyPress(module, methodName)
+	Return Me
+End Sub
+
 
 'add to parent
 Sub Pop(parent As ReactElement)
@@ -56,7 +80,7 @@ Sub SetFixFloatingLabel(b As Boolean) As MDLText
 End Sub
 
 'set floating label
-Sub SetFloatingLabel(b As Boolean) As MDLText
+private Sub SetFloatingLabel(b As Boolean) As MDLText
 	TextInt.AddClass("mdl-textfield--floating-label")
 	Return Me
 End Sub
@@ -95,6 +119,12 @@ Sub SetErrorMessage(msg As String) As MDLText
 	Return Me
 End Sub
 
+'set password
+Sub SetPassword(b As Boolean) As MDLText
+	Input.SetType("password")
+	Input.SetPattern("[A-Za-z0-9]{8,16}")
+	Return Me
+End Sub
 
 'set alpha
 Sub SetAlpha(b As Boolean) As MDLText
@@ -105,6 +135,18 @@ End Sub
 'set numeric
 Sub SetNumeric(b As Boolean) As MDLText
 	Input.SetPattern("-?[0-9]*(\.[0-9]+)?")
+	Return Me
+End Sub
+
+'set min length
+Sub SetMinLength(minlen As Int) As MDLText
+	Input.SetProp("minlength", minlen)
+	Return Me
+End Sub
+
+'set max length
+Sub SetMaxLength(maxlen As Int) As MDLText
+	Input.SetProp("maxlength", maxlen)
 	Return Me
 End Sub
 

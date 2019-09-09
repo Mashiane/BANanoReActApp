@@ -1,5 +1,5 @@
 ﻿B4J=true
-Group=Default Group\MDL
+Group=Default Group
 ModulesStructureVersion=1
 Type=Class
 Version=7.51
@@ -25,6 +25,19 @@ Public Sub Initialize(BR As BANanoReact, sid As String) As MDLCheckBox
 	Span = BR.span("").AddClass("mdl-checkbox__label")
 	Return Me
 End Sub
+
+'set default value
+Sub SetDefaultValue(dv As Object) As MDLCheckBox
+	Input.SetDefaultValue(dv)
+	Return Me
+End Sub
+
+'on change event
+Sub SetOnChange(module As Object, methodName As String) As MDLCheckBox
+	Input.SetOnChange(module, methodName)
+	Return Me
+End Sub
+
 
 'add to parent
 Sub Pop(parent As ReactElement)

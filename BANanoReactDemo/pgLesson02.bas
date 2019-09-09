@@ -69,7 +69,7 @@ Sub Show
 	
 	'
 	'create an ol
-	Dim ol As ReactElement = BR.ol("mylist").AddClass("rectangle").SetOnClick1(Me, "itemclick")
+	Dim ol As ReactElement = BR.ol("mylist").AddClass("rectangle").SetOnClick(Me, "itemclick")
 	'
 	'create a list item
 	Dim li1 As ReactElement = BR.li("").SetKey("li1")

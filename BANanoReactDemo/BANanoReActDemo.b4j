@@ -16,16 +16,18 @@ Library2=jfx
 Library3=banano
 Library4=bananopostprocessor
 Library5=bananoreactlib
-Module1=pgIndex
-Module2=modReact
-Module3=pgLesson01
-Module4=pgLesson02
-Module5=pgLesson03
-Module6=pgLesson04
+Module1=pgLesson05
+Module2=pgLesson04
+Module3=pgIndex
+Module4=modReact
+Module5=pgLesson01
+Module6=pgLesson02
+Module7=pgLesson03
+Module8=pgLesson06
 NumberOfFiles=5
 NumberOfLibraries=5
-NumberOfModules=6
-Version=7.51
+NumberOfModules=8
+Version=7.78
 @EndOfDesignText@
 #Region Project Attributes 
 #End Region
@@ -90,9 +92,11 @@ Sub Application_Error (Error As Exception, StackTrace As String) As Boolean
 End Sub
 
 Sub BANano_Ready
-	pgIndex.Show 
+	'pgIndex.Show 
 	'pgLesson01.Show
 	'pgLesson02.Show
 	'pgLesson03.show
 	'pgLesson04.show
+	'pgLesson05.show
+	pgLesson06.show
 End Sub

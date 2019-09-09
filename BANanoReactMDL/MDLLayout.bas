@@ -1,5 +1,5 @@
 ﻿B4J=true
-Group=Default Group\MDL
+Group=Default Group
 ModulesStructureVersion=1
 Type=Class
 Version=7.51
@@ -14,11 +14,14 @@ Sub Class_Globals
 	Public Page As ReactElement
 	Public Footer As MDLFooter
 	Private BANano As BANano 'ignore
+	Private BanRe As BANanoReact
 End Sub
+
 
 'initialize the button
 Public Sub Initialize(BR As BANanoReact, sid As String) As MDLLayout
 	ID = sid
+	BanRe = BR
 	LayoutInt = BR.div(sid)
 	LayoutInt.AddClass("mdl-layout mdl-js-layout")
 	'
@@ -47,22 +50,15 @@ Sub GetDrawerItemID(e As BANanoEvent) As String
 	Dim aid As String = ""
 	Dim target As BANanoElement = BANano.ToElement(e.OtherField("target"))
 	Dim tagName As String = target.GetField("tagName").Result
+	tagName = tagName.tolowercase
 	Select Case tagName
-	Case "A"
-		aid = target.GetField("id").result
-	Case "I", "SPAN"
-		Dim parentNode As BANanoElement = BANano.ToElement(target.GetField("parentNode"))
-		aid = parentNode.GetField("id").result
+		Case "a"
+			aid = target.GetField("id").result
+		Case "i", "span"
+			Dim parentNode As BANanoElement = BANano.ToElement(target.GetField("parentNode"))
+			aid = parentNode.GetField("id").result
 	End Select
 	Return aid
-End Sub
-
-'add on item click
-Sub OnItemClick(cb As BANanoObject)
-	Dim els() As BANanoElement = BANano.GetElements($"#${ID}-drawer-nav a"$)
-	For Each el As BANanoElement In els
-		el.AddEventListener("click", cb, False)
-	Next
 End Sub
 
 'set fixed tabs'
@@ -100,6 +96,18 @@ End Sub
 'set properties
 Sub SetProps(m As Map) As MDLLayout
 	LayoutInt.SetProps(m)
+	Return Me
+End Sub
+
+'add an element directly
+Sub AddReactElement(el As ReactElement) As MDLLayout
+	Content.AddReactElement(el)
+	Return Me
+End Sub
+
+'add a speed dial
+Sub AddSpeedDial(sd As MDLSpeedDial) As MDLLayout
+	AddReactElement(sd.SpeedDial)
 	Return Me
 End Sub
 

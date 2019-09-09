@@ -1,5 +1,5 @@
 ﻿B4J=true
-Group=Default Group\MDL
+Group=Default Group
 ModulesStructureVersion=1
 Type=Class
 Version=7.51
@@ -11,13 +11,14 @@ Sub Class_Globals
 	Private eh As ReactElement
 	Private bFLoat As Boolean
 	Private lbl As ReactElement
+	Private inp As ReactElement
 End Sub
 
 'initialize the button
 Public Sub Initialize(BR As BANanoReact, sid As String) As MDLSearch
-	ID = sid
+	ID = sid.tolowercase
 	bFLoat = False
-	InputDiv = BR.div(sid).AddClass("mdl-textfield mdl-js-textfield mdl-textfield--expandable")
+	InputDiv = BR.div($"${ID}-div"$).AddClass("mdl-textfield mdl-js-textfield mdl-textfield--expandable")
 	'
 	Dim label As ReactElement
 	label = BR.label($"${ID}-label"$).AddClass("mdl-button mdl-js-button mdl-button--icon").SetFor($"${ID}-input"$)
@@ -30,10 +31,22 @@ Public Sub Initialize(BR As BANanoReact, sid As String) As MDLSearch
 	'
 	eh = BR.div($"${ID}-eh"$).AddClass("mdl-textfield__expandable-holder")
 	'
-	Dim inp As ReactElement = BR.input($"${ID}-input"$).SetType("text").AddClass("mdl-textfield__input")
+	inp = BR.input($"${ID}"$).SetType("text").AddClass("mdl-textfield__input")
 	lbl = BR.label("").AddClass("mdl-textfield__label").SetFor($"${ID}-lblx"$)
 	'
-	eh.AddElement(inp)
+	Return Me
+End Sub
+
+'set default value
+Sub SetDefaultValue(dv As Object) As MDLSearch
+	inp.SetDefaultValue(dv)
+	Return Me
+End Sub
+
+
+'on keypress event
+Sub SetOnKeyPress(module As Object, methodName As String) As MDLSearch
+	inp.SetOnKeyPress(module, methodName)
 	Return Me
 End Sub
 
@@ -57,6 +70,7 @@ End Sub
 
 'return the search stuff
 Sub Search As ReactElement
+	eh.AddElement(inp)
 	If bFLoat Then
 		lbl.SetFor($"${ID}-input"$)
 	End If

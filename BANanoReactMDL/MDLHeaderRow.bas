@@ -1,5 +1,5 @@
 ﻿B4J=true
-Group=Default Group\MDL
+Group=Default Group
 ModulesStructureVersion=1
 Type=Class
 Version=7.51
@@ -17,6 +17,12 @@ End Sub
 Sub SetHidden(b As Boolean) As MDLHeaderRow
 	HR.SetHidden(b)
 	HasContent = False
+	Return Me
+End Sub
+
+'navigation on large screens only
+Sub SetNavLargeScreensOnly(b As Boolean) As MDLHeaderRow
+	Nav.SetLargeScreensOnly(b)
 	Return Me
 End Sub
 
@@ -44,6 +50,13 @@ Sub AddLink(linkID As String, linkHref As String, linkIcon As String, linkLabel 
 	Return Me
 End Sub
 	
+'sub add a link, label visibility
+Sub AddLink1(linkID As String, linkHref As String, linkIcon As String, linkLabel As String, labelHidden As Boolean) As MDLHeaderRow
+	Nav.AddLink1(linkID, linkHref, linkIcon, linkLabel, labelHidden)
+	HasContent = True
+	Return Me
+End Sub	
+	
 'add a layout spacer
 Sub SetSpacer(b As Boolean) As MDLHeaderRow
 	Dim sp As ReactElement = banreact.div("")
@@ -65,6 +78,13 @@ Sub SetButtonIcon(btnID As String, btnIcon As String) As MDLHeaderRow
 	Dim btn As MDLButton
 	btn.Initialize(banreact, btnID).SetButtonIcon(True).SetIcon(btnIcon)
 	HR.AddElement(btn.Button)
+	HasContent = True
+	Return Me
+End Sub
+
+'add a react element
+Sub AddReactElement(el As ReactElement) As MDLHeaderRow
+	HR.AddElement(el)
 	HasContent = True
 	Return Me
 End Sub

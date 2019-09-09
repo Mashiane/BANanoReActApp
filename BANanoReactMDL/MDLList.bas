@@ -1,5 +1,5 @@
 ﻿B4J=true
-Group=Default Group\MDL
+Group=Default Group
 ModulesStructureVersion=1
 Type=Class
 Version=7.51
@@ -57,6 +57,12 @@ End Sub
 'add list item
 Sub AddListItem(li As MDLListItem)
 	ListInt.AddElement(li.ListItem)
+End Sub
+
+'on click event
+Sub SetOnClick(module As Object, methodName As String) As MDLList
+	ListInt.SetOnClick(module, methodName)
+	Return Me
 End Sub
 
 

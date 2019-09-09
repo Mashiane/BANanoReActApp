@@ -19,7 +19,7 @@ Sub Show
 	app.addhr
 	
 	'
-	Dim h1 As ReactElement = BR.h1("").SetClassName("abc").SetTextAlign("center").SetOnClick(BANano.CallBack(Me,"h1_click",Null))
+	Dim h1 As ReactElement = BR.h1("").SetClassName("abc").SetTextAlign("center").SetOnClick(Me,"h1_click")
 	h1.SetState("greeting", "World!")
 	h1.AddChild("Hello " & h1.GetState("greeting"))
 	'

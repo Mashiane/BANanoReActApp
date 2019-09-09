@@ -1,5 +1,5 @@
 ﻿B4J=true
-Group=Default Group\MDL
+Group=Default Group
 ModulesStructureVersion=1
 Type=Class
 Version=7.51
@@ -22,11 +22,23 @@ Public Sub Initialize(BR As BANanoReact, sid As String) As MDLGrid
 	Return Me
 End Sub
 
+'on click event
+Sub SetOnClick(module As Object, methodName As String) As MDLGrid
+	GridInt.SetOnClick(module, methodName)
+	Return Me
+End Sub
+
+
 'add to parent
 Sub Pop(parent As ReactElement)
 	parent.AddElement(Grid)
 End Sub
 
+'add a react element
+Sub AddReactElement(el As ReactElement) As MDLGrid
+	GridInt.AddReactElement(el)
+	Return Me
+End Sub
 
 'stretch
 Sub SetStretch(b As Boolean) As MDLGrid

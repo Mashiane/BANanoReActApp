@@ -1,5 +1,5 @@
 ﻿B4J=true
-Group=Default Group\MDL
+Group=Default Group
 ModulesStructureVersion=1
 Type=Class
 Version=7.51
@@ -47,12 +47,12 @@ Sub SetInfo(info As String) As MDLListItemSecondaryContent
 End Sub
 
 'set radio option
-Sub SetRadio(rid As String, rName As String, rValue As String, rChecked As Boolean) As MDLListItemSecondaryContent
+Sub SetRadio(rid As String, rName As String, module As Object, methodName As String) As MDLListItemSecondaryContent
 	Dim span As ReactElement = BanRe.span(rid).AddClass("mdl-list__item-secondary-action")
 	Dim label As ReactElement = BanRe.label("").AddClass("mdl-radio mdl-js-radio mdl-js-ripple-effect")
 	label.SetStyle("display", "inline").SetFor($"${rid}-option"$)
 	Dim inp As ReactElement = BanRe.input($"${rid}-option"$).SetType("radio").AddClass("mdl-radio__button")
-	inp.SetName(rName).SetValue(rValue).SetChecked(rChecked)
+	inp.SetName(rName).SetOnChange(module, methodName)
 	label.AddElement(inp)
 	span.AddElement(label)
 	SecondaryContent.AddElement(span)
@@ -60,12 +60,12 @@ Sub SetRadio(rid As String, rName As String, rValue As String, rChecked As Boole
 End Sub
 
 'set checkbox
-Sub SetCheckBox(rid As String, rName As String, rValue As String, rChecked As Boolean) As MDLListItemSecondaryContent
+Sub SetCheckBox(rid As String, rName As String, module As Object, methodName As String) As MDLListItemSecondaryContent
 	Dim span As ReactElement = BanRe.span(rid).AddClass("mdl-list__item-secondary-action")
 	Dim label As ReactElement = BanRe.label("").AddClass("mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect")
 	label.SetFor($"${rid}-checkbox"$)
 	Dim inp As ReactElement = BanRe.input($"${rid}-checkbox"$).SetType("checkbox").AddClass("mdl-checkbox__input")
-	inp.SetName(rName).SetValue(rValue).SetChecked(rChecked)
+	inp.SetName(rName).SetOnChange(module, methodName)
 	label.AddElement(inp)
 	span.AddElement(label)
 	SecondaryContent.AddElement(span)
@@ -73,12 +73,12 @@ Sub SetCheckBox(rid As String, rName As String, rValue As String, rChecked As Bo
 End Sub
 
 'set switch
-Sub SetSwitch(rid As String, rName As String, rValue As String, rChecked As Boolean) As MDLListItemSecondaryContent
+Sub SetSwitch(rid As String, rName As String, module As Object, methodName As String) As MDLListItemSecondaryContent
 	Dim span As ReactElement = BanRe.span(rid).AddClass("mdl-list__item-secondary-action")
 	Dim label As ReactElement = BanRe.label("").AddClass("mdl-switch mdl-js-switch mdl-js-ripple-effect")
 	label.SetFor($"${rid}-switch"$)
 	Dim inp As ReactElement = BanRe.input($"${rid}-switch"$).SetType("checkbox").AddClass("mdl-switch__input")
-	inp.SetName(rName).SetValue(rValue).SetChecked(rChecked)
+	inp.SetName(rName).SetOnChange(module, methodName)
 	label.AddElement(inp)
 	span.AddElement(label)
 	SecondaryContent.AddElement(span)

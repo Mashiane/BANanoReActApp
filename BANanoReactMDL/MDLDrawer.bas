@@ -1,5 +1,5 @@
 ﻿B4J=true
-Group=Default Group\MDL
+Group=Default Group
 ModulesStructureVersion=1
 Type=Class
 Version=7.51
@@ -15,7 +15,21 @@ Sub Class_Globals
 	Private DropDown As ReactElement
 	Public ProfileMenu As MDLMenu
 	Public HasContent As Boolean
+	Private BANano As BANano   'ignore
+	Public isFixed As Boolean
 End Sub
+
+#if javascript
+	function closeDrawer() {
+  		var d = document.querySelector('.mdl-layout');
+		d.MaterialLayout.toggleDrawer();
+		var obfuscator = document.querySelector('.mdl-layout__obfuscator');
+  		if (obfuscator.classList.contains('is-visible')) {
+    		obfuscator.classList.remove('is-visible');
+ 		}
+	}
+#End If
+
 
 #if css
 /* END iOS Safari specific workaround */
@@ -82,7 +96,22 @@ Public Sub Initialize(BR As BANanoReact, sid As String) As MDLDrawer
 	DropDown = BR.div($"${sid}-dd"$).AddClass("demo-avatar-dropdown")
 	ProfileMenu.Initialize(BR, $"${sid}-usermenu"$).SetBottomRight(True).SetFor("myaccount")
 	HasContent = False
+	DrawerInt.SetOnClick(Me, "CloseDrawer")
 	Return Me
+End Sub
+
+'add event to existing element
+Sub OnItemClick(module As Object, methodName As String)
+	banreact.OnItemClick($"#${ID}-nav"$, module, methodName)
+End Sub
+
+'close the drawer
+Sub CloseDrawer
+	BANano.RunJavascriptMethod("closeDrawer", Null)
+End Sub
+
+Sub SetOnClick(module As Object, methodName As String)
+	DrawerInt.SetOnClick(module, methodName)
 End Sub
 
 'sub add a link for navigation
@@ -176,6 +205,9 @@ End Sub
 
 'return the nav
 Sub Drawer As ReactElement
+	If isFixed = False Then
+		
+	End If
 	Return DrawerInt
 End Sub
 

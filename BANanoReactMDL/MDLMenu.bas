@@ -1,5 +1,5 @@
 ﻿B4J=true
-Group=Default Group\MDL
+Group=Default Group
 ModulesStructureVersion=1
 Type=Class
 Version=7.51
@@ -22,6 +22,12 @@ End Sub
 'add to parent
 Sub Pop(parent As ReactElement)
 	parent.AddElement(Menu)
+End Sub
+
+'on click event
+Sub SetOnClick(module As Object, methodName As String) As MDLMenu
+	ULInt.SetOnClick(module, methodName)
+	Return Me
 End Sub
 
 

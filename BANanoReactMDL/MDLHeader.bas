@@ -1,5 +1,5 @@
 ﻿B4J=true
-Group=Default Group\MDL
+Group=Default Group
 ModulesStructureVersion=1
 Type=Class
 Version=7.51
@@ -10,9 +10,11 @@ Sub Class_Globals
 	Private HeaderInt As ReactElement
 	Private banreact As BANanoReact
 	Public TabBar As MDLTabBar
-	Public TopRow As MDLHeaderRow
+	Private TopRow As MDLHeaderRow
 	Public BottomRow As MDLHeaderRow
 	Public HasContent As Boolean
+	Private hasSpeedDial As Boolean
+	Private msd As MDLSpeedDial
 End Sub
 
 'initialize the button
@@ -26,6 +28,27 @@ Public Sub Initialize(BR As BANanoReact, sid As String) As MDLHeader
 	TopRow.Initialize(BR, $"${ID}-toprow"$)
 	BottomRow.Initialize(BR, $"${ID}-bottomrow"$)  
 	HasContent = False
+	hasSpeedDial = False
+	Return Me
+End Sub
+
+'add event to an existing event
+Sub OnItemClick(module As Object, methodName As String)
+	banreact.OnItemClick($"#${ID}-toprow-nav"$, module, methodName)
+End Sub
+
+'add event to an existing event
+Sub OnItemClickBottom(module As Object, methodName As String)
+	banreact.OnItemClick($"#${ID}-bottomrow-nav"$, module, methodName)
+End Sub
+
+Sub SetOnClick(module As Object, methodName As String)
+	HeaderInt.SetOnClick(module, methodName)
+End Sub
+
+'show nav only on large screens
+Sub SetNavLargeScreensOnly(b As Boolean) As MDLHeader
+	TopRow.SetNavLargeScreensOnly(b)
 	Return Me
 End Sub
 
@@ -83,11 +106,102 @@ Sub SetTransparent(b As Boolean) As MDLHeader
 	Return Me
 End Sub
 
+'sub add a link for navigation
+Sub AddLink(linkID As String, linkHref As String, linkIcon As String, linkLabel As String) As MDLHeader
+	TopRow.AddLink(linkID, linkHref, linkIcon, linkLabel)
+	HasContent = True
+	Return Me
+End Sub
+
+'sub add a link, label visibility
+Sub AddLink1(linkID As String, linkHref As String, linkIcon As String, linkLabel As String, labelHidden As Boolean) As MDLHeader
+	TopRow.AddLink1(linkID, linkHref, linkIcon, linkLabel, labelHidden)
+	HasContent = True
+	Return Me
+End Sub
+
+'add a layout spacer
+Sub SetSpacer(b As Boolean) As MDLHeader
+	TopRow.SetSpacer(b)
+	HasContent = True
+	Return Me
+End Sub
+
+'add a button icon
+Sub SetButtonIcon(btnID As String, btnIcon As String) As MDLHeader
+	TopRow.SetButtonIcon(btnID, btnIcon)
+	HasContent = True
+	Return Me
+End Sub
+
+'add a menu button
+Sub SetButtonMenu(btnID As String) As MDLHeader
+	TopRow.SetButtonMenu(btnID)
+	HasContent = True
+	Return Me
+End Sub
+
+'add a menu
+Sub SetMenu(menu As MDLMenu) As MDLHeader
+	TopRow.SetMenu(menu)
+	HasContent = True
+	Return Me
+End Sub
+
+'add a search
+Sub SetSearch(searchID As String) As MDLHeader
+	TopRow.SetSearch(searchID)
+	HasContent = True
+	Return Me
+End Sub
+
+'set the title of the page drawer
+Sub SetTitle(t As Object) As MDLHeader
+	TopRow.SetTitle(t)
+	HasContent = True
+	Return Me
+End Sub
+
+'add navigation
+Sub SetNavigation(b As Boolean) As MDLHeader
+	TopRow.SetNavigation(b)
+	HasContent = True
+	Return Me
+End Sub
+
+'add a react element
+Sub AddReactElement(el As ReactElement) As MDLHeader
+	TopRow.AddReactElement(el)
+	HasContent = True
+	Return Me
+End Sub
+
+'add a speed dial
+Sub AddSpeedDial(sd As MDLSpeedDial) As MDLHeader
+	sd.SetHeaderRight(True)
+	msd = sd
+	hasSpeedDial = True
+	Return Me
+End Sub
+
 'return the nav
 Sub Header As ReactElement
-	If TopRow.HasContent Then HeaderInt.AddElement(TopRow.HeaderRow)
-	If BottomRow.HasContent Then HeaderInt.AddElement(BottomRow.HeaderRow)
-	If TabBar.HasContent Then HeaderInt.AddElement(TabBar.TabBar)
+	If TopRow.HasContent Then 
+		HeaderInt.AddElement(TopRow.HeaderRow)
+		HasContent = True
+	End If
+	If BottomRow.HasContent Then 
+		HeaderInt.AddElement(BottomRow.HeaderRow)
+		HasContent = True
+	End If
+	If hasSpeedDial Then
+		HeaderInt.AddElement(msd.SpeedDial)
+		HasContent = True
+	End If
+	If TabBar.HasContent Then 
+		HeaderInt.AddElement(TabBar.TabBar)
+		HasContent = True
+	End If
 	Return HeaderInt
 End Sub
 	

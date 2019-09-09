@@ -1,5 +1,5 @@
 ﻿B4J=true
-Group=Default Group\MDL
+Group=Default Group
 ModulesStructureVersion=1
 Type=Class
 Version=7.51
@@ -26,6 +26,13 @@ Public Sub Initialize(BR As BANanoReact, sid As String) As MDLRadio
 	Return Me
 End Sub
 
+'on change event
+Sub SetOnChange(module As Object, methodName As String) As MDLRadio
+	Input.SetOnChange(module, methodName)
+	Return Me
+End Sub
+
+
 'add to parent
 Sub Pop(parent As ReactElement)
 	parent.AddElement(Radio)
@@ -43,6 +50,13 @@ Sub SetProps(m As Map) As MDLRadio
 	Input.SetProps(m)
 	Return Me
 End Sub
+
+'set default value
+Sub SetDefaultValue(dv As Object) As MDLRadio
+	Input.SetDefaultValue(dv)
+	Return Me
+End Sub
+
 
 'set value
 Sub SetValue(v As Object) As MDLRadio

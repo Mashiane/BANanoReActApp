@@ -1,5 +1,5 @@
 ﻿B4J=true
-Group=Default Group\MDL
+Group=Default Group
 ModulesStructureVersion=1
 Type=Class
 Version=7.51
@@ -32,6 +32,12 @@ Sub Pop(parent As ReactElement)
 	parent.AddElement(IconToggle)
 End Sub
 
+
+'on change event
+Sub SetOnChange(module As Object, methodName As String) As MDLIconToggle
+	Input.SetOnChange(module, methodName)
+	Return Me
+End Sub
 
 'add a class
 Sub AddClass(clsList As String) As MDLIconToggle

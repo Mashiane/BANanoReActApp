@@ -1,5 +1,5 @@
 ﻿B4J=true
-Group=Default Group\MDL
+Group=Default Group
 ModulesStructureVersion=1
 Type=StaticCode
 Version=7.51
@@ -9,6 +9,7 @@ Version=7.51
 Sub Process_Globals
 	Private BANano As BANano  'ignore
 End Sub
+
 
 'show snackbar
 Sub SnackBarShow(eID As String, Message As String, TimeOut As String, ActionText As String)
@@ -38,9 +39,14 @@ Sub SetValueProgress(prgID As String, prgVal As Int)
 	bo.GetField("MaterialProgress").RunMethod("setProgress", Array(prgVal))
 End Sub
 
+
 'refresh all components created dynamically
 Sub Upgrade
-	Dim componentHandler As BANanoObject
-	componentHandler.Initialize("componentHandler")
-	componentHandler.RunMethod("upgradeDom", Null)
+	Try
+		Dim componentHandler As BANanoObject
+		componentHandler.Initialize("componentHandler")
+		componentHandler.RunMethod("upgradeDom", Null)
+	Catch
+		Log(LastException)
+	End Try	
 End Sub

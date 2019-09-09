@@ -14,15 +14,19 @@ Sub ExamplesMenu(BR As BANanoReact) As ReactElement
 	Dim exbox As ReactElement = BR.div("")
 	exbox.SetBackgroundColor("lightgray")
 	'
-	Dim ex1 As ReactElement = BR.a("").SetLabel("Example 1").SetHREF("#").SetOnClick1(Me, "example1").SetPadding("10px")
-	Dim ex2 As ReactElement = BR.a("").SetLabel("Example 2").SetHREF("#").SetOnClick1(Me, "example2").SetPadding("10px")
-	Dim ex3 As ReactElement = BR.a("").SetLabel("Example 3").SetHREF("#").SetOnClick1(Me, "example3").SetPadding("10px")
-	Dim ex4 As ReactElement = BR.a("").SetLabel("Example 4").SetHREF("#").SetOnClick1(Me, "example4").SetPadding("10px")
+	Dim ex1 As ReactElement = BR.a("").SetLabel("Example 1").SetHREF("#").SetOnClick(Me, "example1").SetPadding("10px")
+	Dim ex2 As ReactElement = BR.a("").SetLabel("Example 2").SetHREF("#").SetOnClick(Me, "example2").SetPadding("10px")
+	Dim ex3 As ReactElement = BR.a("").SetLabel("Example 3").SetHREF("#").SetOnClick(Me, "example3").SetPadding("10px")
+	Dim ex4 As ReactElement = BR.a("").SetLabel("Example 4").SetHREF("#").SetOnClick(Me, "example4").SetPadding("10px")
+	Dim ex5 As ReactElement = BR.a("").SetLabel("Example 5").SetHREF("#").SetOnClick(Me, "example5").SetPadding("10px")
+	Dim ex6 As ReactElement = BR.a("").SetLabel("Example 6").SetHREF("#").SetOnClick(Me, "example6").SetPadding("10px")
 	
 	exbox.AddReactElement(ex1)
 	exbox.AddReactElement(ex2)
 	exbox.AddReactElement(ex3)
 	exbox.AddReactElement(ex4)
+	exbox.AddReactElement(ex5)
+	exbox.AddReactElement(ex6)
 	
 	Return exbox
 End Sub
@@ -41,4 +45,14 @@ End Sub
 
 Sub example4
 	pgLesson04.show
+End Sub
+
+
+Sub example5
+	pgLesson05.show
+End Sub
+
+
+Sub example6
+	pgLesson06.show
 End Sub
